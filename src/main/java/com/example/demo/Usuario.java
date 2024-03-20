@@ -7,51 +7,41 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Usuario {
+public class Usuario extends Pessoa{
 
-    private int Id;
-    private String nome;
-    // -> FUTURO
     //    private String cpf;
-    private LocalDate dtNasc;
+    private LocalDate dataNascimento;
     private String genero;
     private Double peso;
     private String nivelCondicao;
-    private String email;
-    private String senha;
     private Boolean contaAtiva;
 
-    public int getId() {
-        return Id;
+/*
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getNome() {
-        return nome;
+ */
+
+    public Usuario(int id, String nome, String email, String senha, LocalDate dataNascimento, String genero, Double peso, String nivelCondicao, Boolean contaAtiva) {
+        super(id, nome, email, senha);
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.peso = peso;
+        this.nivelCondicao = nivelCondicao;
+        this.contaAtiva = contaAtiva;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-// -> FUTURO
-//    public String getCpf() {
-//        return cpf;
-//    }
-//
-//    public void setCpf(String cpf) {
-//        this.cpf = cpf;
-//    }
-
-    public LocalDate getDtNasc() {
-        return dtNasc;
-    }
-
-    public void setDtNasc(LocalDate dtNasc) {
-        this.dtNasc = dtNasc;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getGenero() {
@@ -76,22 +66,6 @@ public class Usuario {
 
     public void setNivelCondicao(String nivelCondicao) {
         this.nivelCondicao = nivelCondicao;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public Boolean getContaAtiva() {

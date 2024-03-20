@@ -10,20 +10,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    List<Usuario> usuarios = new ArrayList<>();
+    private List<Usuario> usuarios = new ArrayList<>();
     private int id;
 
-    //Buscar Usuarios
+    /*
+    ---> Buscar Usuarios <---
+     */
     @GetMapping
     public ResponseEntity<List<Usuario>>listar() {
         if (usuarios.isEmpty()) {
-            return ResponseEntity.status(204).build();
+            return ResponseEntity.status(404).build();
         }
-        return ResponseEntity.status(200).body(usuarios);
+        return ResponseEntity.status(201).body(usuarios);
     }
 
-    //Buscar Usuarios - Ordem Alfabética:
+    /*
+    ---> Buscar Usuarios - Ordem Alfabética: <---
     //http://localhost:8080/usuarios/ordemAlfabetica
+     */
+
     @GetMapping("/ordemAlfabetica")
     public ResponseEntity<List<Usuario>>listarOrdemAlfabetica() {
 
@@ -35,9 +40,12 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuarios);
     }
 
-    //Buscar Usuarios - por status do Usuario:
-    //http://localhost:8080/usuarios/statusUsuario/true
-    //http://localhost:8080/usuarios/statusUsuario/false
+    /*
+    ---> Buscar Usuarios - por status do Usuario: <---
+    http://localhost:8080/usuarios/statusUsuario/true
+    http://localhost:8080/usuarios/statusUsuario/false
+     */
+
     @GetMapping("/statusUsuario/{contaAtiva}")
     public ResponseEntity<List<Usuario>>listarStatusUsuario(@PathVariable Boolean contaAtiva) {
         if (usuarios.isEmpty()) {
@@ -58,7 +66,9 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuariosFiltrados);
     }
 
-    //Cadastrar
+    /*
+    ---> Cadastrar usuários <---
+     */
     @PostMapping
     public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
 
@@ -75,17 +85,18 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(usuario);
     }
 
-    //Atualizar
-    //http://localhost:8080/usuarios/{id}
+    /*
+   ---> Atualizar Usuário <---
+    http://localhost:8080/usuarios/{id}
+     */
+
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizar(@RequestBody Usuario usuario, @PathVariable int id) {
 
-        // Verifica se a email existe
         if (emailExisteOutroUsuario(usuario.getEmail(), id)) {
             return ResponseEntity.status(409).build();
         }
 
-        // Busca o usuario pelo id e atualiza os dados
         Usuario usuarioAtualizado = buscarPorId(id);
 
         if (usuarioAtualizado == null) {
@@ -93,7 +104,7 @@ public class UsuarioController {
         }
 
         usuarioAtualizado.setNome(usuario.getNome());
-        usuarioAtualizado.setDtNasc(usuario.getDtNasc());
+        usuarioAtualizado.setDataNascimento(usuario.getDataNascimento());
         usuarioAtualizado.setGenero(usuario.getGenero());
         usuarioAtualizado.setPeso(usuario.getPeso());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
@@ -104,11 +115,13 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuarioAtualizado);
     }
 
-    //Status da conta: Ativa ou Inativa (True/False)
-    //http://localhost:8080/usuarios/{id}/inativar/{false/true}
+    /*
+    ---> Status da conta: Ativa ou Inativa <---
+    http://localhost:8080/usuarios/{id}/inativar/{false/true}
+     */
+
     @PutMapping("/{id}/inativar/{contaAtiva}")
     public ResponseEntity<Usuario> statusConta(@PathVariable int id, @PathVariable Boolean contaAtiva) {
-
         Usuario usuario = buscarPorId(id);
 
         if (usuario == null) {
@@ -119,26 +132,26 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuario);
     }
 
-    //Deletar conta totalmente
-    //http://localhost:8080/usuarios/{id}
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> deletarTotal(@PathVariable int id) {
+    /*
+    ---> Deletar conta totalmente <---
+    http://localhost:8080/usuarios/{id}
+     */
 
-        // Buscar o usuario pelo ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarTotal(@PathVariable int id) {
         Usuario usuario = buscarPorId(id);
 
-        // Se o carro não existir, retorna 404
         if (usuario == null) {
             return ResponseEntity.status(404).build();
         }
-
-        // Remove o usuario da lista
         usuarios.remove(usuario);
-        return ResponseEntity.status(204).body(usuario);
+        return ResponseEntity.status(200).build();
     }
 
+    /*
+     ---> Métodos para Validação <---
+     */
 
-    //Métodos para Validação
     private Usuario buscarPorId(int id) {
 
         for (Usuario usuario : usuarios) {
@@ -148,12 +161,14 @@ public class UsuarioController {
         }
         return null;
     }
+
     private boolean emailExisteOutroUsuario(String email, int id) {
 
         return usuarios
                 .stream()
                 .anyMatch(usuario -> usuario.getEmail().equals(email) && usuario.getId() != id);
     }
+
     private boolean emailExiste(String email) {
 
         return usuarios
@@ -172,35 +187,37 @@ public class UsuarioController {
     }
 }
 
-//  Exemplo de Criação:
-// {
-//      "nome": "Gabriel",
-//      "dtNasc": "2002-05-03",
-//      "genero": "Masculino",
-//      "peso": "68.5",
-//      "nivelCondicao": "Básico",
-//      "email": "gabriel@hotmail.com",
-//      "senha": "123321"
-// }
+
+/*
+ ----> Exemplo de JSON:
+ {
+      "nome": "Gabriel",
+      "dtNasc": "2002-05-03",
+      "genero": "Masculino",
+      "peso": "68.5",
+        "nivelCondicao": "Básico",
+        "email": "gabriel@hotmail.com",
+        "senha": "123321"
+ }
 
 
-// -> FUTURO
-//    public boolean cpfValido(String cpf){
-//        if (cpf.matches("[0-9]+") && cpf.length() == 10){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    private boolean cpfExiste(String cpf) {
-//
-//        if (cpf.matches("[0-9]+")){
-//            //Pq só funciona com 9 digitos? e não com 11
-//            for (Usuario usuario : usuarios) {
-//                if (usuario.getCpf().equals(cpf)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
+    public boolean cpfValido(String cpf){
+        if (cpf.matches("[0-9]+") && cpf.length() == 10){
+            return true;
+        }
+        return false;
+    }
+
+     private boolean cpfExiste(String cpf) {
+
+        if (cpf.matches("[0-9]+")){
+            //Pq só funciona com 9 digitos? e não com 11
+            for (Usuario usuario : usuarios) {
+                if (usuario.getCpf().equals(cpf)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+ */
