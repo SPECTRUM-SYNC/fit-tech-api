@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Entity;
 
 public abstract class Pessoa {
     private int id;

@@ -1,11 +1,6 @@
-package com.example.demo;
+package com.example.demo.Entity;
 
-import jakarta.validation.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Usuario extends Pessoa{
 

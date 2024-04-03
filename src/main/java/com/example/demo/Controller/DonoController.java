@@ -1,11 +1,11 @@
-package com.example.demo;
+package com.example.demo.Controller;
 
+import com.example.demo.Entity.Dono;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/donos")

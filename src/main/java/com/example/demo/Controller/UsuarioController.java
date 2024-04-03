@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.example.demo.Controller;
+import com.example.demo.Entity.QuickSort;
+import com.example.demo.Entity.Usuario;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -13,9 +13,8 @@ public class UsuarioController {
     private List<Usuario> usuarios = new ArrayList<>();
     private int id;
 
-    /*
-    ---> Buscar Usuarios <---
-     */
+
+    //---> Buscar Usuarios <---
     @GetMapping
     public ResponseEntity<List<Usuario>>listar() {
         if (usuarios.isEmpty()) {
@@ -24,28 +23,28 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(usuarios);
     }
 
+
     /*
     ---> Buscar Usuarios - Ordem Alfabética: <---
-    //http://localhost:8080/usuarios/ordemAlfabetica
-     */
-
+    //http://localhost:8080/usuarios/ordemAlfabetica                                                        */
     @GetMapping("/ordemAlfabetica")
     public ResponseEntity<List<Usuario>>listarOrdemAlfabetica() {
 
+        List<Usuario> usuarioOrdenados = new ArrayList<>(usuarios);
         if (usuarios.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
-        Collections.sort(usuarios, Comparator.comparing(Usuario::getNome));
-        return ResponseEntity.status(200).body(usuarios);
+        QuickSort.quickSort(usuarioOrdenados, 0, usuarioOrdenados.size() -1);
+
+        return ResponseEntity.status(200).body(usuarioOrdenados);
     }
+
 
     /*
     ---> Buscar Usuarios - por status do Usuario: <---
     http://localhost:8080/usuarios/statusUsuario/true
-    http://localhost:8080/usuarios/statusUsuario/false
-     */
-
+    http://localhost:8080/usuarios/statusUsuario/false                                                            */
     @GetMapping("/statusUsuario/{contaAtiva}")
     public ResponseEntity<List<Usuario>>listarStatusUsuario(@PathVariable Boolean contaAtiva) {
         if (usuarios.isEmpty()) {
@@ -66,9 +65,8 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuariosFiltrados);
     }
 
-    /*
-    ---> Cadastrar usuários <---
-     */
+
+    //---> Cadastrar usuários <---
     @PostMapping
     public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
 
@@ -87,9 +85,7 @@ public class UsuarioController {
 
     /*
    ---> Atualizar Usuário <---
-    http://localhost:8080/usuarios/{id}
-     */
-
+    http://localhost:8080/usuarios/{id}                                                                         */
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizar(@RequestBody Usuario usuario, @PathVariable int id) {
 
@@ -117,9 +113,7 @@ public class UsuarioController {
 
     /*
     ---> Status da conta: Ativa ou Inativa <---
-    http://localhost:8080/usuarios/{id}/inativar/{false/true}
-     */
-
+    http://localhost:8080/usuarios/{id}/inativar/{false/true}                                                                    */
     @PutMapping("/{id}/inativar/{contaAtiva}")
     public ResponseEntity<Usuario> statusConta(@PathVariable int id, @PathVariable Boolean contaAtiva) {
         Usuario usuario = buscarPorId(id);
@@ -148,10 +142,8 @@ public class UsuarioController {
         return ResponseEntity.status(200).build();
     }
 
-    /*
-     ---> Métodos para Validação <---
-     */
 
+//---> Métodos para Validação <---
     private Usuario buscarPorId(int id) {
 
         for (Usuario usuario : usuarios) {
@@ -195,10 +187,27 @@ public class UsuarioController {
       "dtNasc": "2002-05-03",
       "genero": "Masculino",
       "peso": "68.5",
-        "nivelCondicao": "Básico",
-        "email": "gabriel@hotmail.com",
-        "senha": "123321"
+      "nivelCondicao": "Básico",
+      "email": "gabriel@hotmail.com",
+      "senha": "123321"
  }
+
+{
+      "nome": "Winycios",
+      "dtNasc": "2008-2-12",
+      "genero": "Masculino",
+      "peso": "64.5",
+      "nivelCondicao": "Básico",
+      "email": "gabriel@hotmail.com",
+      "senha": "123321"
+ }
+
+
+
+
+
+
+
 
 
     public boolean cpfValido(String cpf){
