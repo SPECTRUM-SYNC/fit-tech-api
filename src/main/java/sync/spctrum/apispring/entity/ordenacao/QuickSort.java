@@ -1,12 +1,25 @@
-package com.example.demo.Entity;
+package sync.spctrum.apispring.entity.ordenacao;
+
+import sync.spctrum.apispring.entity.Pessoa;
+import sync.spctrum.apispring.entity.Usuario;
 
 import java.util.List;
 
+/**
+ * The type Quick sort.
+ */
 public class QuickSort {
 
+    /**
+     * Quick sort.
+     *
+     * @param v         the v
+     * @param indInicio the ind inicio
+     * @param indFim    the ind fim
+     */
     public static void quickSort(List<Usuario> v, int indInicio, int indFim) {
 
-        Pessoa pivo = v.get(indFim);
+        Usuario pivo = v.get(indFim);
         int i = indFim;
 
         for (int j = indFim - 1; j >= indInicio; j--) {
@@ -28,6 +41,13 @@ public class QuickSort {
         }
     }
 
+    /**
+     * Troca.
+     *
+     * @param v the v
+     * @param i the
+     * @param j the j
+     */
     public static void troca(List<Usuario> v, int i, int j) {
         Usuario temp = v.get(i);
         v.set(i, v.get(j));
