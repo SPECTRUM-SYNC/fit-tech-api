@@ -1,4 +1,4 @@
-package com.example.demo.Entity;
+package com.example.demo.domain.Pessoa;
 
 public abstract class Pessoa {
     private int id;
@@ -6,6 +6,10 @@ public abstract class Pessoa {
     private String email;
     private String senha;
 
+
+    public Pessoa() {
+    }
+    
     public Pessoa(int id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;

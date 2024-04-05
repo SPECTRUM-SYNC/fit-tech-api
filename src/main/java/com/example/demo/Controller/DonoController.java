@@ -1,8 +1,9 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Entity.Dono;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.domain.Dono.Dono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,12 +66,6 @@ public class DonoController {
                 .anyMatch(usuario -> usuario.getEmail().equals(email));
     }
 
-    private boolean emailExisteOutroDono(String email, int id) {
-
-        return donosAcademia
-                .stream()
-                .anyMatch(dono -> dono.getEmail().equals(email) && dono.getId() != id);
-    }
 
     public static boolean emailValido(String email){
         int validarEmail = email.indexOf("@");

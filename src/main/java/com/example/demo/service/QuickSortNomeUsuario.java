@@ -1,8 +1,11 @@
-package com.example.demo.Entity;
+package com.example.demo.service;
 
 import java.util.List;
 
-public class QuickSort {
+import com.example.demo.domain.Pessoa.Pessoa;
+import com.example.demo.domain.Usuario.Usuario;
+
+public class QuickSortNomeUsuario {
 
     public static void quickSort(List<Usuario> v, int indInicio, int indFim) {
 

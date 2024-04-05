@@ -1,17 +1,41 @@
-package com.example.demo.Controller;
-import com.example.demo.Entity.QuickSort;
-import com.example.demo.Entity.Usuario;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+package com.example.demo.api.Controller.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import com.example.demo.domain.Usuario.Usuario;
+import com.example.demo.service.QuickSortNomeUsuario;
+import com.example.demo.service.Usuario.UsuarioService;
+import com.example.demo.service.Usuario.dto.UsuarioCriacaoDTO;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
     private List<Usuario> usuarios = new ArrayList<>();
     private int id;
+
+    @Autowired
+    private UsuarioService usuarioService;
+    
+    @PostMapping("/criar")
+    public ResponseEntity<UsuarioCriacaoDTO> criar(@RequestBody @Valid UsuarioCriacaoDTO usuarioCriacaoDTO) {
+        usuarioService.criar(usuarioCriacaoDTO);
+        return ResponseEntity.status(201).body(usuarioCriacaoDTO);
+    }
 
 
     //---> Buscar Usuarios <---
@@ -35,7 +59,7 @@ public class UsuarioController {
             return ResponseEntity.status(204).build();
         }
 
-        QuickSort.quickSort(usuarioOrdenados, 0, usuarioOrdenados.size() -1);
+        QuickSortNomeUsuario.quickSort(usuarioOrdenados, 0, usuarioOrdenados.size() -1);
 
         return ResponseEntity.status(200).body(usuarioOrdenados);
     }
@@ -177,6 +201,9 @@ public class UsuarioController {
         }
         return true;
     }
+
+
+
 }
 
 

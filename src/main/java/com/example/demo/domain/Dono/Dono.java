@@ -1,4 +1,6 @@
-package com.example.demo.Entity;
+package com.example.demo.domain.Dono;
+
+import com.example.demo.domain.Pessoa.Pessoa;
 
 public class Dono extends Pessoa{
     private String cnpj;
