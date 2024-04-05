@@ -1,4 +1,4 @@
-package sync.spctrum.apispring.dto.usuario;
+package sync.spctrum.apispring.service.usuario.dto.usuario;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package sync.spctrum.apispring.entity;
+package sync.spctrum.apispring.domain.Usuario;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

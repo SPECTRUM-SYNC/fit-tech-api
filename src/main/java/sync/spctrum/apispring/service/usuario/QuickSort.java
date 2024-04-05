@@ -1,7 +1,6 @@
-package sync.spctrum.apispring.entity.ordenacao;
+package sync.spctrum.apispring.service.usuario;
 
-import sync.spctrum.apispring.entity.Pessoa;
-import sync.spctrum.apispring.entity.Usuario;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package sync.spctrum.apispring.entity.config;
+package sync.spctrum.apispring.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import sync.spctrum.apispring.entity.Usuario;
-import sync.spctrum.apispring.repository.UsuarioRepository;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
+import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 
 import java.time.LocalDate;
 import java.util.Arrays;

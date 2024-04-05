@@ -1,16 +1,16 @@
-package sync.spctrum.apispring.controller;
+package sync.spctrum.apispring.Controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sync.spctrum.apispring.dto.modelMapper.UsuarioMapper;
-import sync.spctrum.apispring.dto.usuario.UsuarioCreateDTO;
-import sync.spctrum.apispring.dto.usuario.UsuarioResponseDTO;
-import sync.spctrum.apispring.entity.Usuario;
-import sync.spctrum.apispring.entity.ordenacao.QuickSort;
+import sync.spctrum.apispring.service.usuario.dto.modelMapper.UsuarioMapper;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
+import sync.spctrum.apispring.service.usuario.QuickSort;
 import sync.spctrum.apispring.exception.ResourceDuplicate;
 import sync.spctrum.apispring.exception.ResourceNotFound;
-import sync.spctrum.apispring.repository.UsuarioRepository;
+import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,10 +1,10 @@
-package sync.spctrum.apispring.dto.modelMapper;
+package sync.spctrum.apispring.service.usuario.dto.modelMapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
-import sync.spctrum.apispring.dto.usuario.UsuarioCreateDTO;
-import sync.spctrum.apispring.dto.usuario.UsuarioResponseDTO;
-import sync.spctrum.apispring.entity.Usuario;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.util.List;
 

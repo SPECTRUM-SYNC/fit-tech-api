@@ -1,8 +1,8 @@
-package sync.spctrum.apispring.repository;
+package sync.spctrum.apispring.domain.Usuario.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sync.spctrum.apispring.entity.Usuario;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 /**
  * The interface Usuario repository.
