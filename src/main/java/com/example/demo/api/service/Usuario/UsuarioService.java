@@ -1,12 +1,12 @@
-package com.example.demo.service.Usuario;
+package com.example.demo.api.service.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Usuario.Usuario;
-import com.example.demo.domain.Usuario.reposository.UsuarioRepository;
-import com.example.demo.service.Usuario.dto.UsuarioCriacaoDTO;
-import com.example.demo.service.Usuario.dto.UsuarioMapper;
+import com.example.demo.api.domain.Usuario.Usuario;
+import com.example.demo.api.domain.Usuario.reposository.UsuarioRepository;
+import com.example.demo.api.service.Usuario.dto.UsuarioCriacaoDTO;
+import com.example.demo.api.service.Usuario.dto.UsuarioMapper;
 
 @Service
 public class UsuarioService {

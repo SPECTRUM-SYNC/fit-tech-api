@@ -1,4 +1,4 @@
-package com.example.demo.domain.Pessoa;
+package com.example.demo.api.domain.Pessoa;
 
 public abstract class Pessoa {
     private int id;

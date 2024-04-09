@@ -1,9 +1,9 @@
-package com.example.demo.Controller;
+package com.example.demo.api.Controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.domain.Dono.Dono;
+import com.example.demo.api.domain.Dono.Dono;
 
 import java.util.ArrayList;
 import java.util.List;

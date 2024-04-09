@@ -1,4 +1,4 @@
-package com.example.demo.service.Usuario.dto;
+package com.example.demo.api.service.Usuario.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

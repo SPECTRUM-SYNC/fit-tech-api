@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.example.demo.domain.Usuario.Usuario;
-import com.example.demo.service.QuickSortNomeUsuario;
-import com.example.demo.service.Usuario.UsuarioService;
-import com.example.demo.service.Usuario.dto.UsuarioCriacaoDTO;
+import com.example.demo.api.domain.Usuario.Usuario;
+import com.example.demo.api.service.QuickSortNomeUsuario;
+import com.example.demo.api.service.Usuario.UsuarioService;
+import com.example.demo.api.service.Usuario.dto.UsuarioCriacaoDTO;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

@@ -1,9 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.api.service;
 
 import java.util.List;
 
-import com.example.demo.domain.Pessoa.Pessoa;
-import com.example.demo.domain.Usuario.Usuario;
+import com.example.demo.api.domain.Pessoa.Pessoa;
+import com.example.demo.api.domain.Usuario.Usuario;
 
 public class QuickSortNomeUsuario {
 

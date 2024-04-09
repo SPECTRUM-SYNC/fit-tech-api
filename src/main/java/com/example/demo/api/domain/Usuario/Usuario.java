@@ -1,8 +1,8 @@
-package com.example.demo.domain.Usuario;
+package com.example.demo.api.domain.Usuario;
 
 import java.time.LocalDate;
 
-import com.example.demo.domain.Pessoa.Pessoa;
+import com.example.demo.api.domain.Pessoa.Pessoa;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GenerationType;

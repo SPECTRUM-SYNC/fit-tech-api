@@ -1,6 +1,6 @@
-package com.example.demo.domain.Dono;
+package com.example.demo.api.domain.Dono;
 
-import com.example.demo.domain.Pessoa.Pessoa;
+import com.example.demo.api.domain.Pessoa.Pessoa;
 
 public class Dono extends Pessoa{
     private String cnpj;
