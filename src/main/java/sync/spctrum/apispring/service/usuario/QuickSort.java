@@ -1,4 +1,6 @@
-package com.example.demo.Entity;
+package sync.spctrum.apispring.service.usuario;
+
+import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.util.List;
 
@@ -6,7 +8,7 @@ public class QuickSort {
 
     public static void quickSort(List<Usuario> v, int indInicio, int indFim) {
 
-        Pessoa pivo = v.get(indFim);
+        Usuario pivo = v.get(indFim);
         int i = indFim;
 
         for (int j = indFim - 1; j >= indInicio; j--) {
@@ -33,5 +35,5 @@ public class QuickSort {
         v.set(i, v.get(j));
         v.set(j, temp);
 
-}
+    }
 }
