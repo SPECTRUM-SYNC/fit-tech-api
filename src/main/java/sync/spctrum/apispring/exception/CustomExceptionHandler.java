@@ -47,4 +47,13 @@ public class CustomExceptionHandler {
                 request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(TransactionNotAcceptable.class)
+    public ResponseEntity<ModeloError> transactionNotAcceptable(TransactionNotAcceptable e, HttpServletRequest request) {
+        String error = "Transação não aceita";
+        HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
+        ModeloError err = new ModeloError(Instant.now(), status.value(), error, e.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }

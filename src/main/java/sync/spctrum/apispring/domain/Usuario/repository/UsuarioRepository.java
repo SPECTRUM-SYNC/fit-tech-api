@@ -6,4 +6,5 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
 }

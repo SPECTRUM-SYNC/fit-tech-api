@@ -3,18 +3,19 @@ package sync.spctrum.apispring.Controller;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sync.spctrum.apispring.domain.Objetivo.Objetivo;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
+import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
+import sync.spctrum.apispring.exception.ResourceDuplicate;
+import sync.spctrum.apispring.exception.ResourceNotFound;
+import sync.spctrum.apispring.exception.TransactionNotAcceptable;
+import sync.spctrum.apispring.service.usuario.QuickSort;
 import sync.spctrum.apispring.service.usuario.dto.modelMapper.UsuarioMapper;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
-import sync.spctrum.apispring.domain.Usuario.Usuario;
-import sync.spctrum.apispring.service.usuario.QuickSort;
-import sync.spctrum.apispring.exception.ResourceDuplicate;
-import sync.spctrum.apispring.exception.ResourceNotFound;
-import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -27,7 +28,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDTO>> listar() {
+    public ResponseEntity<List<UsuarioResponseDTO>> getListarTudo() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
 
         if (usuarioList.isEmpty()) {
@@ -37,17 +38,12 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UsuarioResponseDTO> findByUser(@PathVariable Long id) {
-        Optional<Usuario> user = usuarioRepository.findById(id);
-
-        if (user.isPresent()) {
-            return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(user.get()));
-        }
-        throw new ResourceNotFound(id);
+    public ResponseEntity<UsuarioResponseDTO> getUsuarioPorId(@PathVariable Long id) {
+        return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(procurarUsuarioPorId(id)));
     }
 
     @GetMapping("/ordemAlfabetica")
-    public ResponseEntity<List<UsuarioResponseDTO>> listarOrdemAlfabetica() {
+    public ResponseEntity<List<UsuarioResponseDTO>> getListarOrdemAlfabetica() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
 
         if (usuarioList.isEmpty()) {
@@ -59,103 +55,93 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
-    @GetMapping("/statusUsuario/{contaAtiva}")
-    public ResponseEntity<List<UsuarioResponseDTO>> listarStatusUsuario(@PathVariable Boolean contaAtiva) {
+    @GetMapping("/statusUsuario")
+    public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuarioStatus(@RequestParam Boolean contaAtiva) {
         List<Usuario> usuarioList = usuarioRepository.findAll().stream().filter(usuario -> usuario.getContaAtiva().equals(contaAtiva)).toList();
 
         if (usuarioList.isEmpty()) {
-            throw new ResourceNotFound("");
+            throw new ResourceNotFound("Nehuma conta %s encontrada".formatted(contaAtiva ? "ativa" : "inativa"));
         }
 
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> cadastrar(@Valid @RequestBody UsuarioCreateDTO usuario) {
+    public ResponseEntity<UsuarioResponseDTO> postCadastrarUsuario(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
 
-        if (emailExiste(usuario.getEmail())) {
-            throw new ResourceDuplicate(usuario.getNome());
+        if (validEmailExistente(usuarioCreateDTO.getEmail())) {
+            throw new ResourceDuplicate(usuarioCreateDTO.getNome());
         }
 
-        Usuario user = UsuarioMapper.toEntity(usuario);
-        user.setContaAtiva(true);
-        Usuario newUser = usuarioRepository.save(user);
+        Usuario usuario = UsuarioMapper.toEntity(usuarioCreateDTO);
+        usuario.setContaAtiva(true);
 
-        return ResponseEntity.status(201).body(findByUser(newUser.getId()).getBody());
+        Usuario novoUsuario = usuarioRepository.save(usuario);
+
+        if (usuario.getObjetivo() == null) {
+            novoUsuario.setObjetivo(new Objetivo(novoUsuario.getId(), null, novoUsuario));
+            usuarioRepository.save(novoUsuario);
+        }
+
+        return ResponseEntity.status(201).body(UsuarioMapper.toRespostaDTO(novoUsuario));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizar(@Valid @RequestBody UsuarioCreateDTO usuario, @PathVariable Long id) {
+    public ResponseEntity<UsuarioResponseDTO> putAtualizarUsuario(@Valid @RequestBody UsuarioUpdateDTO usuario, @PathVariable Long id) {
 
-        if (emailExisteOutroUsuario(usuario.getEmail(), id)) {
+        Usuario usuarioAtualizado = procurarUsuarioPorId(id);
+
+        if (validEmailExistente(usuario.getEmail())) {
             throw new ResourceDuplicate(usuario.getNome());
         }
 
-        UsuarioResponseDTO usuarioAtualizado = findByUser(id).getBody();
-
-        if (usuarioAtualizado == null) {
-            throw new ResourceNotFound(id);
-        }
-
         usuarioAtualizado.setNome(usuario.getNome());
-        usuarioAtualizado.setDataNascimento(usuario.getDataNascimento());
-        usuarioAtualizado.setGenero(usuario.getGenero());
         usuarioAtualizado.setPeso(usuario.getPeso());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
         usuarioAtualizado.setEmail(usuario.getEmail());
-        usuarioAtualizado.setSenha(usuario.getSenha());
-        usuarioAtualizado.setContaAtiva(true);
 
-        return ResponseEntity.status(200).body(usuarioAtualizado);
+        usuarioRepository.save(usuarioAtualizado);
+        return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
     }
 
+    @PatchMapping("/{id}/ativar")
+    public ResponseEntity<UsuarioResponseDTO> patchAtivarContaUsuario(@PathVariable Long id) {
+        Usuario usuario = procurarUsuarioPorId(id);
 
-    /**
-     * Status conta response entity.
-     *
-     * @param id         the id
-     * @param contaAtiva the conta ativa
-     * @return the response entity
-     */
-    @PutMapping("/{id}/inativar/{contaAtiva}")
-    public ResponseEntity<UsuarioResponseDTO> statusConta(@PathVariable Long id, @PathVariable Boolean contaAtiva) {
-        UsuarioResponseDTO usuario = findByUser(id).getBody();
-
-        if (usuario == null) {
-            throw new ResourceNotFound(id);
+        if (usuario.getContaAtiva()) {
+            throw new TransactionNotAcceptable("Usuário já stá com a conta ativada");
         }
 
-        usuario.setContaAtiva(contaAtiva);
-        return ResponseEntity.status(200).body(usuario);
+        usuario.setContaAtiva(true);
+        usuarioRepository.save(usuario);
+        return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuario));
     }
 
+    @DeleteMapping("/{id}/inativar")
+    public ResponseEntity<UsuarioResponseDTO> inativarContaUsuario(@PathVariable Long id) {
+        Usuario usuario = procurarUsuarioPorId(id);
 
-    /**
-     * Deletar total response entity.
-     *
-     * @param id the id
-     * @return the response entity
-     */
+        if (!usuario.getContaAtiva()) {
+            throw new TransactionNotAcceptable("Usuário já está com a conta desativada");
+        }
+
+        usuario.setContaAtiva(false);
+        usuarioRepository.save(usuario);
+        return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuario));
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarTotal(@PathVariable Long id) {
-        UsuarioResponseDTO usuario = findByUser(id).getBody();
-
-        if (usuario == null) {
-            throw new ResourceNotFound(id);
-        }
-        usuarioRepository.delete(UsuarioMapper.toEntity(usuario));
+    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
+        usuarioRepository.delete(procurarUsuarioPorId(id));
         return ResponseEntity.status(200).build();
     }
 
-
-    private boolean emailExisteOutroUsuario(String email, Long id) {
-
-        return usuarioRepository.findAll().stream().anyMatch(usuario -> usuario.getEmail().equals(email) && !Objects.equals(usuario.getId(), id));
-    }
-
-    private boolean emailExiste(String email) {
+    private boolean validEmailExistente(String email) {
 
         return usuarioRepository.findAll().stream().anyMatch(usuario -> usuario.getEmail().equals(email));
     }
-}
 
+    private Usuario procurarUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound(id));
+    }
+}

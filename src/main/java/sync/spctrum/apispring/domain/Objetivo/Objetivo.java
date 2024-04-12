@@ -12,12 +12,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 public class Objetivo implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usuario_id")
     private Long id;
     private String objetivo;
 
-    @OneToMany(mappedBy="objetivo", fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-
 }

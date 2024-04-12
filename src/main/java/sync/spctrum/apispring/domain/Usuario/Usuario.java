@@ -1,13 +1,14 @@
 package sync.spctrum.apispring.domain.Usuario;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 
-@Table(name="usuario")
 public class Usuario implements Serializable {
 
     @Id
@@ -30,7 +30,7 @@ public class Usuario implements Serializable {
     private String nivelCondicao;
     private Boolean contaAtiva;
 
-    @ManyToOne()
-    @JoinColumn(name="objetivo_id", nullable=false)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @PrimaryKeyJoinColumn
     private Objetivo objetivo;
 }

@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Objetivo.repository.ObjetivoRepository;
 import sync.spctrum.apispring.exception.ResourceNotFound;
+import sync.spctrum.apispring.exception.TransactionNotAcceptable;
 import sync.spctrum.apispring.service.objetivo.dto.modelMapper.ObjetivoMapper;
 import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoCreateDTO;
 import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoResponseDTO;
 
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/objetivos")
@@ -20,10 +19,12 @@ public class ObjetivoController {
 
     private final ObjetivoRepository objetivoRepository;
 
-    public ObjetivoController(ObjetivoRepository objetivoRepository) {this.objetivoRepository = objetivoRepository;}
+    public ObjetivoController(ObjetivoRepository objetivoRepository) {
+        this.objetivoRepository = objetivoRepository;
+    }
 
     @GetMapping
-    public ResponseEntity<List<ObjetivoResponseDTO>> listar() {
+    public ResponseEntity<List<ObjetivoResponseDTO>> getTodosObjetivos() {
         List<Objetivo> objetivoList = objetivoRepository.findAll();
 
         if (objetivoList.isEmpty()) {
@@ -32,22 +33,32 @@ public class ObjetivoController {
         return ResponseEntity.status(201).body(ObjetivoMapper.toListRespostaDTO(objetivoList));
     }
 
-    @PostMapping
-    public ResponseEntity<ObjetivoResponseDTO> cadastrar(@Valid @RequestBody ObjetivoCreateDTO objetivoCreateDTO) {
-
-        Objetivo objetivo = ObjetivoMapper.toEntity(objetivoCreateDTO);
-        Objetivo novoObjetivo = objetivoRepository.save(objetivo);
-
-        return ResponseEntity.status(201).body(findByUser(novoObjetivo.getId()).getBody());
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ObjetivoResponseDTO> getObjetivoPorId(@PathVariable Long id) {
+        return ResponseEntity.status(200).body(ObjetivoMapper.toObjetivoDTO(procurarObjetivoPorId(id)));
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<ObjetivoResponseDTO> findByUser(@PathVariable Long id) {
-        Optional<Objetivo> objetivo = objetivoRepository.findById(id);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ObjetivoResponseDTO> putObjetivo(@PathVariable Long id, @Valid @RequestBody ObjetivoCreateDTO objetivoCreateDTO) {
+        Objetivo objetivo = procurarObjetivoPorId(id);
+        objetivo.setObjetivo(objetivoCreateDTO.getObjetivo());
+        return ResponseEntity.status(200).body(ObjetivoMapper.toObjetivoDTO(objetivoRepository.save(objetivo)));
+    }
 
-        if (objetivo.isPresent()) {
-            return ResponseEntity.status(200).body(ObjetivoMapper.toObjetivoDTO(objetivo.get()));
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> limparObjetivo(@PathVariable Long id) {
+        Objetivo objetivo = procurarObjetivoPorId(id);
+
+        if (objetivo.getObjetivo() == null) {
+            throw new TransactionNotAcceptable("Objetivo já está apagado");
         }
-        throw new ResourceNotFound(id);
+        objetivo.setObjetivo(null);
+        objetivoRepository.save(objetivo);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    private Objetivo procurarObjetivoPorId(Long id) {
+        return objetivoRepository.findById(id).orElseThrow(() -> new ResourceNotFound(id));
     }
 }
