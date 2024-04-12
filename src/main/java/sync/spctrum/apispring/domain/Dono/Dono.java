@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sync.spctrum.apispring.domain.Pessoa.Pessoa;
 
-/**
- * The type Dono.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

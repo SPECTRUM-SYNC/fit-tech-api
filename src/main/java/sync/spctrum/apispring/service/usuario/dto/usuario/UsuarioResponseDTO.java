@@ -1,18 +1,17 @@
 package sync.spctrum.apispring.service.usuario.dto.usuario;
 
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
+import sync.spctrum.apispring.domain.Objetivo.Objetivo;
+import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoCreateDTO;
+import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoResponseDTO;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * The type Usuario response dto.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -28,13 +27,8 @@ public class UsuarioResponseDTO {
     private Double peso;
     private String nivelCondicao;
     private Boolean contaAtiva;
+    private ObjetivoResponseDTO objetivo;
 
-
-    /**
-     * Gets Genero.
-     *
-     * @return the Genero
-     */
     public String getGenero() {
         return genero ? "Masculino" : "femeas";
     }

@@ -1,17 +1,23 @@
 package sync.spctrum.apispring.service.usuario.dto.usuario;
 
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sync.spctrum.apispring.domain.Objetivo.Objetivo;
+import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoCreateDTO;
+import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoResponseDTO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * The type Usuario create dto.
- */
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -40,4 +46,21 @@ public class UsuarioCreateDTO {
 
     @NotBlank(message = "É preciso descrever o nivel de condição do usuário")
     private String nivelCondicao;
+
+    private Boolean contaAtiva = true;
+
+    @ManyToOne
+    @JoinColumn(name="objetivo_id", nullable=false)
+    private Objetivo objetivo;
+
+    public UsuarioCreateDTO(String nome, String email, String senha, LocalDate dataNascimento, Boolean genero, Double peso, String nivelCondicao, Objetivo objetivo) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.peso = peso;
+        this.nivelCondicao = nivelCondicao;
+        this.objetivo = objetivo;
+    }
 }

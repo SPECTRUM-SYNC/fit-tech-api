@@ -1,22 +1,21 @@
 package sync.spctrum.apispring.domain.Usuario;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * The type Usuario.
- */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
+@Table(name="usuario")
 public class Usuario implements Serializable {
 
     @Id
@@ -30,4 +29,8 @@ public class Usuario implements Serializable {
     private Double peso;
     private String nivelCondicao;
     private Boolean contaAtiva;
+
+    @ManyToOne()
+    @JoinColumn(name="objetivo_id", nullable=false)
+    private Objetivo objetivo;
 }

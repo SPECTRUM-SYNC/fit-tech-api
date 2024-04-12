@@ -16,29 +16,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * The type Usuario controller.
- */
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;
 
-    /**
-     * Instantiates a new Usuario controller.
-     *
-     * @param usuarioRepository the usuario repository
-     */
     public UsuarioController(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
-    /**
-     * Listar response entity.
-     *
-     * @return the response entity
-     */
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> listar() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
@@ -49,12 +36,6 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
-    /**
-     * Find by user response entity.
-     *
-     * @param id the id
-     * @return the response entity
-     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<UsuarioResponseDTO> findByUser(@PathVariable Long id) {
         Optional<Usuario> user = usuarioRepository.findById(id);
@@ -65,12 +46,6 @@ public class UsuarioController {
         throw new ResourceNotFound(id);
     }
 
-
-    /**
-     * Listar ordem alfabetica response entity.
-     *
-     * @return the response entity
-     */
     @GetMapping("/ordemAlfabetica")
     public ResponseEntity<List<UsuarioResponseDTO>> listarOrdemAlfabetica() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
@@ -84,13 +59,6 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
-
-    /**
-     * Listar status usuario response entity.
-     *
-     * @param contaAtiva the conta ativa
-     * @return the response entity
-     */
     @GetMapping("/statusUsuario/{contaAtiva}")
     public ResponseEntity<List<UsuarioResponseDTO>> listarStatusUsuario(@PathVariable Boolean contaAtiva) {
         List<Usuario> usuarioList = usuarioRepository.findAll().stream().filter(usuario -> usuario.getContaAtiva().equals(contaAtiva)).toList();
@@ -102,13 +70,6 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
-
-    /**
-     * Cadastrar response entity.
-     *
-     * @param usuario the usuario
-     * @return the response entity
-     */
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> cadastrar(@Valid @RequestBody UsuarioCreateDTO usuario) {
 
@@ -123,13 +84,6 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(findByUser(newUser.getId()).getBody());
     }
 
-    /**
-     * Atualizar response entity.
-     *
-     * @param usuario the usuario
-     * @param id      the id
-     * @return the response entity
-     */
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> atualizar(@Valid @RequestBody UsuarioCreateDTO usuario, @PathVariable Long id) {
 

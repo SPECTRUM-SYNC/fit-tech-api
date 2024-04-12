@@ -13,19 +13,9 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * The type Custom exception handler.
- */
 @ControllerAdvice
 public class CustomExceptionHandler {
 
-    /**
-     * Handle validation exceptions response entity.
-     *
-     * @param ex      the ex
-     * @param request the request
-     * @return the response entity
-     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ModeloError> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
         Map<String, String> errors = new HashMap<>();
@@ -40,7 +30,6 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(401).body(err);
     }
 
-    // Excessão para recurso não encontrado
     @ExceptionHandler(ResourceNotFound.class)
     public ResponseEntity<ModeloError> resourceNotFound(ResourceNotFound e, HttpServletRequest request) {
         String error = "Recurso não encontrado";
@@ -50,7 +39,6 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    // Excessão para recurso duplicado
     @ExceptionHandler(ResourceDuplicate.class)
     public ResponseEntity<ModeloError> resourceDuplicte(ResourceDuplicate e, HttpServletRequest request) {
         String error = "Recurso já existente";

@@ -9,9 +9,6 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.Instant;
 
-/**
- * Modelo personalizado criado para representar uma excessão HTTP
- */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,24 +16,10 @@ import java.time.Instant;
 public class ModeloError implements Serializable {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss'Z'", timezone = "GMT")
-    /**
-     * horario do ocorrido
-     */
+
     private Instant timestamp;
-    /**
-     * Status HTTP
-     */
     private Integer status;
-    /**
-     * Erro
-     */
     private String error;
-    /**
-     * Descrição do erro
-     */
     private String message;
-    /**
-     * Localização do arquivo
-     */
     private String path;
 }
