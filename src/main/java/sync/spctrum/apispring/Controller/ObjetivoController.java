@@ -1,5 +1,6 @@
 package sync.spctrum.apispring.Controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class ObjetivoController {
         this.objetivoRepository = objetivoRepository;
     }
 
+    @ApiResponse(responseCode = "201", description = "Mostrando todos os objetivos cadastrados.")
     @GetMapping
     public ResponseEntity<List<ObjetivoResponseDTO>> getTodosObjetivos() {
         List<Objetivo> objetivoList = objetivoRepository.findAll();
@@ -33,11 +35,13 @@ public class ObjetivoController {
         return ResponseEntity.status(201).body(ObjetivoMapper.toListRespostaDTO(objetivoList));
     }
 
+    @ApiResponse(responseCode = "200", description = "Objetivo encontrado com sucesso.")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ObjetivoResponseDTO> getObjetivoPorId(@PathVariable Long id) {
         return ResponseEntity.status(200).body(ObjetivoMapper.toObjetivoDTO(procurarObjetivoPorId(id)));
     }
 
+    @ApiResponse(responseCode = "200", description = "Objetivo atualizado com sucesso.")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ObjetivoResponseDTO> putObjetivo(@PathVariable Long id, @Valid @RequestBody ObjetivoCreateDTO objetivoCreateDTO) {
         Objetivo objetivo = procurarObjetivoPorId(id);
@@ -45,6 +49,7 @@ public class ObjetivoController {
         return ResponseEntity.status(200).body(ObjetivoMapper.toObjetivoDTO(objetivoRepository.save(objetivo)));
     }
 
+    @ApiResponse(responseCode = "200", description = "Objetivo deletado com sucesso.")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> limparObjetivo(@PathVariable Long id) {
         Objetivo objetivo = procurarObjetivoPorId(id);
