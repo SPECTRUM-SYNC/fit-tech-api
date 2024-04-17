@@ -1,5 +1,6 @@
 package sync.spctrum.apispring.Controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso.")
     @PostMapping("/criar")
     public ResponseEntity<Void> criar(@RequestBody UsuarioCriacaoDto usuarioCriacaoDto) {
         System.out.println("Criando usuário");
@@ -45,17 +47,20 @@ public class UsuarioController {
         return ResponseEntity.status(201).build();
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso.")
     @PostMapping("/login")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto) {
         UsuarioTokenDto usuarioTokenDto = this.usuarioService.autenticar(usuarioLoginDto);
         return ResponseEntity.status(200).body(usuarioTokenDto);
     }
 
+    @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
     @GetMapping("/todos")
     public ResponseEntity<List<Usuario>> listar() {
         return ResponseEntity.status(200).body(this.usuarioService.listar());
     }
 
+    @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> getListarTudo() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
@@ -65,11 +70,13 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso.")
     @GetMapping(value = "/{id}")
     public ResponseEntity<UsuarioResponseDTO> getUsuarioPorId(@PathVariable Long id) {
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(procurarUsuarioPorId(id)));
     }
 
+    @ApiResponse(responseCode = "200", description = "Ordenando usuários por ordem alfabética.")
     @GetMapping("/ordemAlfabetica")
     public ResponseEntity<List<UsuarioResponseDTO>> getListarOrdemAlfabetica() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
@@ -80,6 +87,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
+    @ApiResponse(responseCode = "200", description = "Mostrando usuários por status.")
     @GetMapping("/statusUsuario")
     public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuarioStatus(@RequestParam Boolean contaAtiva) {
         List<Usuario> usuarioList = usuarioRepository.findAll().stream().filter(usuario -> usuario.getContaAtiva().equals(contaAtiva)).toList();
@@ -89,6 +97,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
+    @ApiResponse(responseCode = "201", description = "Novo usuário cadastrado.")
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> postCadastrarUsuario(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
         if (validEmailExistente(usuarioCreateDTO.getEmail())) {
@@ -104,6 +113,7 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(UsuarioMapper.toRespostaDTO(novoUsuario));
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário escolhido atualizado com sucesso.")
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> putAtualizarUsuario(@Valid @RequestBody UsuarioUpdateDTO usuario, @PathVariable Long id) {
         Usuario usuarioAtualizado = procurarUsuarioPorId(id);
@@ -118,6 +128,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário ativado com sucesso.")
     @PatchMapping("/{id}/ativar")
     public ResponseEntity<UsuarioResponseDTO> patchAtivarContaUsuario(@PathVariable Long id) {
         Usuario usuario = procurarUsuarioPorId(id);
@@ -129,6 +140,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuario));
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário inativado com sucesso.")
     @DeleteMapping("/{id}/inativar")
     public ResponseEntity<UsuarioResponseDTO> inativarContaUsuario(@PathVariable Long id) {
         Usuario usuario = procurarUsuarioPorId(id);
@@ -140,6 +152,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuario));
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
         usuarioRepository.delete(procurarUsuarioPorId(id));
