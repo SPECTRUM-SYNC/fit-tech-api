@@ -10,6 +10,8 @@ import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceDuplicate;
 import sync.spctrum.apispring.exception.ResourceNotFound;
 import sync.spctrum.apispring.exception.TransactionNotAcceptable;
+import sync.spctrum.apispring.service.email.EmailService;
+import sync.spctrum.apispring.service.email.dto.EmailDTO;
 import sync.spctrum.apispring.service.usuario.QuickSort;
 import sync.spctrum.apispring.service.usuario.UsuarioService;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginDto;
@@ -22,7 +24,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
+@SecurityRequirement(name = "Bearer")
 public class UsuarioController {
+    @Autowired
+    private EmailService emailService;
 
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
@@ -34,7 +39,6 @@ public class UsuarioController {
     }
 
     @PostMapping("/criar")
-    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> criar(@RequestBody UsuarioCriacaoDto usuarioCriacaoDto) {
         System.out.println("Criando usuário");
         this.usuarioService.criar(usuarioCriacaoDto);
@@ -142,6 +146,12 @@ public class UsuarioController {
         return ResponseEntity.status(200).build();
     }
 
+    @PostMapping("/enviar-email")
+    public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
+        emailService.enviarEmail(emailDTO.getPara(), emailDTO.getAssunto(), emailDTO.getCorpo());
+        return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+    }
+
     private boolean validEmailExistente(String email) {
         return usuarioRepository.findAll().stream().anyMatch(usuario -> usuario.getEmail().equals(email));
     }
@@ -149,4 +159,7 @@ public class UsuarioController {
     private Usuario procurarUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound(id));
     }
+
+
+
 }
