@@ -77,3 +77,18 @@ Agora você está pronto para começar a construir algo incrível com a API Fit 
 ---
 
 Licenciado pela [Spectrum-Sync](https://github.com/SPECTRUM-SYNC). Todos os direitos reservados.
+
+
+
+---
+
+<div align="center">
+  <h3><b>📍 Profile Visitor Count</b></h3>
+</div>
+
+<p align="center">
+  <img
+    src="https://profile-counter.glitch.me/SPECTRUM-SYNC/count.svg"
+    alt="Número de visitantes no perfil"
+  />
+</p>
