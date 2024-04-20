@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 public class Usuario implements Serializable {
 
     @Id
@@ -24,8 +23,9 @@ public class Usuario implements Serializable {
     private String nome;
     private String email;
     private String senha;
+    private String img;
     private LocalDate dataNascimento;
-    private Boolean genero;
+    private String genero;
     private Double peso;
     private String nivelCondicao;
     private Boolean contaAtiva;

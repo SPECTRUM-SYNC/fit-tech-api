@@ -57,6 +57,8 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             addUsernameInContext(request, username, jwtToken);
+            addUsernameInContextGoogle(request, username, jwtToken);
+
         }
 
         filterChain.doFilter(request, response);
@@ -65,6 +67,22 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
     private void addUsernameInContext(HttpServletRequest request, String username, String jwtToken) {
 
         UserDetails userDetails = autenticacaoService.loadUserByUsername(username);
+
+        if (jwtTokenManager.validateToken(jwtToken, userDetails)) {
+
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+
+            usernamePasswordAuthenticationToken
+                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        }
+    }
+
+    private void addUsernameInContextGoogle(HttpServletRequest request, String username, String jwtToken) {
+
+        UserDetails userDetails = autenticacaoService.loadUserByGoogle(username);
 
         if (jwtTokenManager.validateToken(jwtToken, userDetails)) {
 

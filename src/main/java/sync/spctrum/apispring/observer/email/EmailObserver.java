@@ -1,4 +1,4 @@
-package sync.spctrum.apispring.Observer.email;
+package sync.spctrum.apispring.observer.email;
 
 import sync.spctrum.apispring.Observer.Observer;
 import sync.spctrum.apispring.service.email.EmailService;

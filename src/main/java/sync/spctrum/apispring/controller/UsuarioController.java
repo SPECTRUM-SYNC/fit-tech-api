@@ -1,11 +1,11 @@
-package sync.spctrum.apispring.Controller;
+package sync.spctrum.apispring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceDuplicate;
@@ -15,49 +15,29 @@ import sync.spctrum.apispring.service.email.EmailService;
 import sync.spctrum.apispring.service.email.dto.EmailDTO;
 import sync.spctrum.apispring.service.usuario.QuickSort;
 import sync.spctrum.apispring.service.usuario.UsuarioService;
-import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginDto;
-import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginDTO;
+import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginGoogleDTO;
+import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
 import sync.spctrum.apispring.service.usuario.dto.modelMapper.UsuarioMapper;
-import sync.spctrum.apispring.service.usuario.dto.usuario.*;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
 @SecurityRequirement(name = "Bearer")
 public class UsuarioController {
-    @Autowired
-    private EmailService emailService;
-
+    private final EmailService emailService;
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public UsuarioController(EmailService emailService, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+        this.emailService = emailService;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
-    }
-
-    @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso.")
-    @PostMapping("/criar")
-    public ResponseEntity<Void> criar(@RequestBody UsuarioCriacaoDto usuarioCriacaoDto) {
-        System.out.println("Criando usuário");
-        this.usuarioService.criar(usuarioCriacaoDto);
-        return ResponseEntity.status(201).build();
-    }
-
-    @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso.")
-    @PostMapping("/login")
-    public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto) {
-        UsuarioTokenDto usuarioTokenDto = this.usuarioService.autenticar(usuarioLoginDto);
-        return ResponseEntity.status(200).body(usuarioTokenDto);
-    }
-
-    @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
-    @GetMapping("/todos")
-    public ResponseEntity<List<Usuario>> listar() {
-        return ResponseEntity.status(200).body(this.usuarioService.listar());
     }
 
     @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
@@ -65,9 +45,9 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioResponseDTO>> getListarTudo() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
         if (usuarioList.isEmpty()) {
-            throw new ResourceNotFound("");
+            throw new ResourceNotFound("Nenhum usuário encontrado");
         }
-        return ResponseEntity.status(201).body(UsuarioMapper.toListRespostaDTO(usuarioList));
+        return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
     @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso.")
@@ -97,33 +77,37 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
-    @ApiResponse(responseCode = "201", description = "Novo usuário cadastrado.")
+    @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso.")
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> postCadastrarUsuario(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
+    public ResponseEntity<UsuarioResponseDTO> postCadastrarUsuario(@RequestBody @Valid UsuarioCreateDTO usuarioCreateDTO) {
         if (validEmailExistente(usuarioCreateDTO.getEmail())) {
-            throw new ResourceDuplicate(usuarioCreateDTO.getNome());
+            throw new ResourceDuplicate("Email já utilizado");
         }
-        Usuario usuario = UsuarioMapper.toEntity(usuarioCreateDTO);
-        usuario.setContaAtiva(true);
-        Usuario novoUsuario = usuarioRepository.save(usuario);
-        if (usuario.getObjetivo() == null) {
-            novoUsuario.setObjetivo(new Objetivo(novoUsuario.getId(), null, novoUsuario));
-            usuarioRepository.save(novoUsuario);
-        }
-        return ResponseEntity.status(201).body(UsuarioMapper.toRespostaDTO(novoUsuario));
+        return ResponseEntity.status(201).body(usuarioService.criarUsuario(usuarioCreateDTO));
+    }
+
+    @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso.")
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioTokenDTO> postLoginUsuario(@RequestBody @Valid UsuarioLoginDTO usuarioLoginDto) {
+        UsuarioTokenDTO usuarioTokenDto = this.usuarioService.autenticar(usuarioLoginDto);
+        return ResponseEntity.status(200).body(usuarioTokenDto);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso.")
+    @PostMapping("/login/google")
+    public ResponseEntity<UsuarioTokenDTO> postLoginGoogle(@RequestBody @Valid  UsuarioLoginGoogleDTO usuarioLoginDto) {
+        UsuarioTokenDTO usuarioTokenDto = this.usuarioService.autenticarGoogle(usuarioLoginDto);
+        return ResponseEntity.status(200).body(usuarioTokenDto);
     }
 
     @ApiResponse(responseCode = "200", description = "Usuário escolhido atualizado com sucesso.")
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> putAtualizarUsuario(@Valid @RequestBody UsuarioUpdateDTO usuario, @PathVariable Long id) {
         Usuario usuarioAtualizado = procurarUsuarioPorId(id);
-        if (validEmailExistente(usuario.getEmail())) {
-            throw new ResourceDuplicate(usuario.getNome());
-        }
+
         usuarioAtualizado.setNome(usuario.getNome());
         usuarioAtualizado.setPeso(usuario.getPeso());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
-        usuarioAtualizado.setEmail(usuario.getEmail());
         usuarioRepository.save(usuarioAtualizado);
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
     }
@@ -170,9 +154,6 @@ public class UsuarioController {
     }
 
     private Usuario procurarUsuarioPorId(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound(id));
+        return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound("ID : " + id));
     }
-
-
-
 }
