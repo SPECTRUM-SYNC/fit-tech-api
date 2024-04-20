@@ -18,14 +18,11 @@ public class UsuarioResponseDTO {
     private String nome;
     private String email;
     private String senha;
+    private String img;
     private LocalDate dataNascimento;
-    private Boolean genero;
+    private String genero;
     private Double peso;
     private String nivelCondicao;
     private Boolean contaAtiva;
     private ObjetivoResponseDTO objetivo;
-
-    public String getGenero() {
-        return genero ? "Masculino" : "femeas";
-    }
 }

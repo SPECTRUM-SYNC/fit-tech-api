@@ -3,11 +3,10 @@ package sync.spctrum.apispring.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
-import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoCreateDTO;
-import sync.spctrum.apispring.service.usuario.dto.modelMapper.UsuarioMapper;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -16,21 +15,25 @@ import java.util.List;
 @Configuration
 public class Population implements CommandLineRunner {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public Population(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void run(String... args) {
 
-        UsuarioCreateDTO m1 = new UsuarioCreateDTO("Winycios", "winycios@gmail.com", "Madalena13#", LocalDate.of(2008, 2, 15), true, 64.5, "Basico", new ObjetivoCreateDTO("oi"));
-        UsuarioCreateDTO m2 = new UsuarioCreateDTO("Ana", "Ana@gmail.com", "Madalena15#", LocalDate.of(2007, 5, 13), false, 70.8, "Basico", new ObjetivoCreateDTO("oi"));
-        UsuarioCreateDTO m3 = new UsuarioCreateDTO("Gustavo", "Gustavo@gmail.com", "Madalena1#", LocalDate.of(2005, 1, 10), true, 100.0, "Basico", new ObjetivoCreateDTO("oi"));
+        Usuario m1 = new Usuario(1L, "Winycios", "winycios@gmail.com", passwordEncoder.encode("Madalena13#"), "", LocalDate.of(2008, 2, 15), "Homem", 64.5, "Basico", true, new Objetivo());
+        m1.setObjetivo(new Objetivo(1L, "Ser forte", m1));
+        Usuario m2 = new Usuario(2L, "Ana", "Ana@gmail.com", passwordEncoder.encode("Madalena15#"), "", LocalDate.of(2007, 5, 13), "Mulher", 70.8, "Basico", false, new Objetivo());
+        m2.setObjetivo(new Objetivo(2L, "Ser Feliz", m2));
+        Usuario m3 = new Usuario(3L, "Gustavo", "Gustavo@gmail.com", passwordEncoder.encode("Madalena1#"), "", LocalDate.of(2005, 1, 10), "Homem", 100.0, "Basico", true, new Objetivo());
+        m3.setObjetivo(new Objetivo(3L, "Pegar mulher", m3));
 
-        List<Usuario> usuarios = Arrays.asList(UsuarioMapper.toEntity(m1), UsuarioMapper.toEntity(m2),UsuarioMapper.toEntity(m3));
-        usuarios.get(0).setContaAtiva(true);
-        usuarios.get(1).setContaAtiva(true);
-        usuarios.get(2).setContaAtiva(true);
-
-        usuarioRepository.saveAll(usuarios);
+        usuarioRepository.saveAll(Arrays.asList(m1, m2, m3));
     }
 }

@@ -2,12 +2,10 @@ package sync.spctrum.apispring.service.usuario.dto.modelMapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
-
-import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCriacaoDto;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
+import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 
 import java.util.List;
 
@@ -31,24 +29,15 @@ public class UsuarioMapper {
     public static List<UsuarioResponseDTO> toListRespostaDTO(List<Usuario> usuarios) {
         return usuarios.stream().map(UsuarioMapper::toRespostaDTO).toList();
     }
-    public static Usuario of(UsuarioCriacaoDto usuarioCriacaoDto) {
-    Usuario usuario = new Usuario();
 
-    usuario.setEmail(usuarioCriacaoDto.getEmail());
-    usuario.setNome(usuarioCriacaoDto.getNome());
-    usuario.setSenha(usuarioCriacaoDto.getSenha());
+    public static UsuarioTokenDTO toToken(Usuario usuario, String token) {
+        UsuarioTokenDTO usuarioTokenDto = new UsuarioTokenDTO();
+        usuarioTokenDto.setUserId(usuario.getId());
+        usuarioTokenDto.setEmail(usuario.getEmail());
+        usuarioTokenDto.setNome(usuario.getNome());
+        usuarioTokenDto.setToken(token);
 
-    return usuario;
-  }
-
-  public static UsuarioTokenDto of(Usuario usuario, String token) {
-    UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
-    usuarioTokenDto.setUserId(usuario.getId());
-    usuarioTokenDto.setEmail(usuario.getEmail());
-    usuarioTokenDto.setNome(usuario.getNome());
-    usuarioTokenDto.setToken(token);
-
-    return usuarioTokenDto;
-  }
+        return usuarioTokenDto;
+    }
 }
 

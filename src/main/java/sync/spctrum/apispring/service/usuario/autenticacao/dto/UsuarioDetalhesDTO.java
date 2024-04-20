@@ -6,7 +6,7 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.util.Collection;
 
-public class UsuarioDetalhesDto implements UserDetails {
+public class UsuarioDetalhesDTO implements UserDetails {
 
   private final String nome;
 
@@ -14,15 +14,12 @@ public class UsuarioDetalhesDto implements UserDetails {
 
   private final String senha;
 
-  public UsuarioDetalhesDto(Usuario usuario) {
+  public UsuarioDetalhesDTO(Usuario usuario) {
     this.nome = usuario.getNome();
     this.email = usuario.getEmail();
     this.senha = usuario.getSenha();
   }
 
-  public String getNome() {
-    return nome;
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

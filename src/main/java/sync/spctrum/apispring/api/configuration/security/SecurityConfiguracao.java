@@ -51,31 +51,33 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/usuarios/criar"),
+            new AntPathRequestMatcher("/usuarios/email/{email}"),
+            new AntPathRequestMatcher("/usuarios/login/google"),
+            new AntPathRequestMatcher("/usuarios"),
             new AntPathRequestMatcher("/usuarios/login"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/error/**")
     };
 
-        @Bean
-        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(Customizer.withDefaults())
-            .csrf(CsrfConfigurer<HttpSecurity>::disable)
-            .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
-            )
-            .exceptionHandling(handling -> handling
-                .authenticationEntryPoint(autenticacaoJwtEntryPoint))
-            .sessionManagement(management -> management
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .cors(Customizer.withDefaults())
+                .csrf(CsrfConfigurer<HttpSecurity>::disable)
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+                )
+                .exceptionHandling(handling -> handling
+                        .authenticationEntryPoint(autenticacaoJwtEntryPoint))
+                .sessionManagement(management -> management
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.addFilterBefore(jwtAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-        }
+    }
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {

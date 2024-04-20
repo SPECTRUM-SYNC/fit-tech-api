@@ -1,4 +1,4 @@
-package sync.spctrum.apispring.Controller;
+package sync.spctrum.apispring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -64,6 +64,6 @@ public class ObjetivoController {
     }
 
     private Objetivo procurarObjetivoPorId(Long id) {
-        return objetivoRepository.findById(id).orElseThrow(() -> new ResourceNotFound(id));
+        return objetivoRepository.findById(id).orElseThrow(() -> new ResourceNotFound("ID : " + id));
     }
 }

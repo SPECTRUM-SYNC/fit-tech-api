@@ -1,4 +1,4 @@
-package sync.spctrum.apispring.exception.Modelo;
+package sync.spctrum.apispring.exception.modelo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
