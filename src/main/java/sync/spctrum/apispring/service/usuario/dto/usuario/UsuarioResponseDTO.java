@@ -25,4 +25,5 @@ public class UsuarioResponseDTO {
     private String nivelCondicao;
     private Boolean contaAtiva;
     private ObjetivoResponseDTO objetivo;
+    private int pontuacao;
 }
