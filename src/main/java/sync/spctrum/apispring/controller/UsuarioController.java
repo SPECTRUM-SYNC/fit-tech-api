@@ -145,8 +145,15 @@ public class UsuarioController {
 
     @PostMapping("/enviar-email")
     public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
-        emailService.enviarEmail(emailDTO.getPara(), emailDTO.getAssunto(), emailDTO.getCorpo());
-        return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+
+        if (validEmailExistente(emailDTO.getPara()) == true){
+
+            emailService.enviarEmail(emailDTO.getPara(), emailDTO.getNome());
+            return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+        }else {
+            return ResponseEntity.badRequest().body("E-mail não existe!");
+        }
+
     }
 
     private boolean validEmailExistente(String email) {
