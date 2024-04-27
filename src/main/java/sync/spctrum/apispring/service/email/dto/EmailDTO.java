@@ -8,7 +8,6 @@ import lombok.Setter;
 public class EmailDTO {
 
     private String para;
-    private String assunto;
-    private String corpo;
+    private String nome;
 
 }
