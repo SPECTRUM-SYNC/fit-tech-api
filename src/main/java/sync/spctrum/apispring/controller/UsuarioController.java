@@ -4,8 +4,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileUrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sync.spctrum.apispring.CSVServico;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceDuplicate;
@@ -23,6 +28,9 @@ import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
+import java.io.*;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -148,6 +156,60 @@ public class UsuarioController {
         emailService.enviarEmail(emailDTO.getPara(), emailDTO.getAssunto(), emailDTO.getCorpo());
         return ResponseEntity.ok().body("E-mail enviado com sucesso!");
     }
+
+    @GetMapping("/relatorio")
+    public ResponseEntity<String> exportaCSV(){
+       CSVServico csvServico = new CSVServico();
+        List<Usuario> usuarioList = usuarioRepository.findAll();
+        csvServico.gravaArquivoCsv(usuarioList,"Arquivo");
+
+        return ResponseEntity.status(200).body("C:\\Users\\Paulo Frutuoso\\FitTech\\fit-tech-api\\Arquivo.csv"
+        );
+    }
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadCSV() {
+        try {
+            // Crie uma lista de dados para o CSV
+            List<Usuario> usuarioList = usuarioRepository.findAll();
+
+            List<UsuarioResponseDTO> dados = UsuarioMapper.toListRespostaDTO(usuarioList);
+
+            // Crie um ByteArrayOutputStream para escrever o CSV
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            OutputStreamWriter writer = new OutputStreamWriter(baos);
+
+             String teste = String.format("%6s; %-22s; %4s; %9s; %-30s; %8s; %10s; %10s \n","ID","NOME","PESO", "GENERO","E-MAIL", "STATUS CONTA","DATA NASC","NIVEL");
+            writer.write(teste);
+
+            // Escreva os dados no OutputStreamWriter
+            for (UsuarioResponseDTO linha : dados) {
+               Long idUsuario = linha.getId();
+                String nomeUsuario = linha.getNome();
+                Double pesoUsuario = linha.getPeso();
+                String generoUsuario = linha.getGenero();
+                String emailUsuario = linha.getEmail();
+                String contaAtivaUsuario = linha.getContaAtiva()? "Ativa" : "Desativa";
+                String dataNascimentoUsuario = linha.getDataNascimento().toString();
+                String nivelCondicaoUsuario = linha.getNivelCondicao();
+
+                writer.write( idUsuario + ";" + nomeUsuario + ";" + pesoUsuario + ";" + generoUsuario + ";" + emailUsuario + ";" +
+                        contaAtivaUsuario + ";" + dataNascimentoUsuario + ";"  + nivelCondicaoUsuario +  "\n");
+            }
+
+            // Feche o OutputStreamWriter
+            writer.close();
+
+            // Retorne o CSV como um array de bytes com um cabeçalho de resposta apropriado
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("text/csv"));
+            headers.setContentDispositionFormData("attachment", "dados.csv");
+            return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     private boolean validEmailExistente(String email) {
         return usuarioRepository.findAll().stream().anyMatch(usuario -> usuario.getEmail().equals(email));
