@@ -47,7 +47,6 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    //Inicio de ListObj
     @ApiResponse(responseCode = "201", description = "Usuário adicionado no ranking")
     @PostMapping("/adicionar-top-ranking")
     public void adicionarUsuarioRanking(@RequestBody Usuario usuario){
@@ -77,8 +76,6 @@ public class UsuarioController {
     public void exibirUsuariosRanking() {
         listaTopUsuarios.exibe();
     }
-
-    //Fim de ListObj
 
     @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
     @GetMapping
