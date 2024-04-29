@@ -54,6 +54,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/usuarios/email/{email}"),
             new AntPathRequestMatcher("/usuarios/login/google"),
             new AntPathRequestMatcher("/usuarios"),
+            new AntPathRequestMatcher("/openai"),
+            new AntPathRequestMatcher("/openai/gpt3"),
             new AntPathRequestMatcher("/usuarios/login"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/error/**")

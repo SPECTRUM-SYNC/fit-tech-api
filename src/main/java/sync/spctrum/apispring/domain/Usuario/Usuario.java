@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 public class Usuario implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +28,7 @@ public class Usuario implements Serializable {
     private Double peso;
     private String nivelCondicao;
     private Boolean contaAtiva;
+    private int pontuacao;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn

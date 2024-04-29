@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sync.spctrum.apispring.domain.Usuario.ListObject;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceDuplicate;
@@ -27,21 +28,57 @@ import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
 @SecurityRequirement(name = "Bearer")
 public class UsuarioController {
-    private final EmailService emailService;
-    private final UsuarioService usuarioService;
-    private final UsuarioRepository usuarioRepository;
+    private EmailService emailService;
+    private UsuarioService usuarioService;
+    private UsuarioRepository usuarioRepository;
+    private ListObject<Usuario> listaTopUsuarios;
+
+    public UsuarioController(){
+        listaTopUsuarios = new ListObject<>(5);
+    }
 
     @Autowired
     public UsuarioController(EmailService emailService, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
         this.emailService = emailService;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
+    }
+
+    @ApiResponse(responseCode = "201", description = "Usuário adicionado no ranking")
+    @PostMapping("/adicionar-top-ranking")
+    public void adicionarUsuarioRanking(@RequestBody Usuario usuario){
+        listaTopUsuarios.adiciona(usuario);
+    }
+
+    @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso.")
+    @DeleteMapping("/remover/{indice}")
+    public void removerPorIndiceUsuarioRanking(@PathVariable int indice) {
+        listaTopUsuarios.removePeloIndice(indice);
+    }
+
+    @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso.")
+    @DeleteMapping("/remover")
+    public void removerUsuarioRanking(@RequestBody Usuario usuario) {
+        listaTopUsuarios.removeElemento(usuario);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso.")
+    @GetMapping("/buscar/{elemento}")
+    public int buscarUsuarioRanking(@PathVariable Usuario elemento) {
+        return listaTopUsuarios.busca(elemento);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no ranking.")
+    @GetMapping("/exibir")
+    public void exibirUsuariosRanking() {
+        listaTopUsuarios.exibe();
     }
 
     @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
@@ -149,8 +186,15 @@ public class UsuarioController {
 
     @PostMapping("/enviar-email")
     public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
-        emailService.enviarEmail(emailDTO.getPara(), emailDTO.getAssunto(), emailDTO.getCorpo());
-        return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+
+        if (validEmailExistente(emailDTO.getPara()) == true){
+
+            emailService.enviarEmail(emailDTO.getPara(), emailDTO.getNome());
+            return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+        }else {
+            return ResponseEntity.badRequest().body("E-mail não existe!");
+        }
+
     }
 
     @GetMapping("/download")
