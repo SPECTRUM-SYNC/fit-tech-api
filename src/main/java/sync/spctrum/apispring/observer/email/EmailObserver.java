@@ -1,6 +1,6 @@
 package sync.spctrum.apispring.observer.email;
 
-import sync.spctrum.apispring.Observer.Observer;
+import sync.spctrum.apispring.observer.Observer;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.service.email.EmailService;
 
