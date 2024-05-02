@@ -21,4 +21,5 @@ public class Objetivo implements Serializable {
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
 }
