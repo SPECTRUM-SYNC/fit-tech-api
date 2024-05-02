@@ -6,11 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 @Getter
 @Setter
@@ -30,6 +27,5 @@ public class Receita {
     private int gorduras;
     private int acucar;
     private Long idUser;
-
     
 }

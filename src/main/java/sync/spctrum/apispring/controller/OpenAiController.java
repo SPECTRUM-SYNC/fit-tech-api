@@ -12,6 +12,7 @@ import sync.spctrum.apispring.service.receita.ReceitaService;
 
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import org.springframework.ai.chat.ChatClient;
 @RestController
 @RequestMapping("/openai")
@@ -24,9 +25,10 @@ public class OpenAiController {
     OpenAiChatClient openai;
 
     @GetMapping("/gpt3/{id}")
-    public Receita gpt3(@RequestParam String objetivo, @PathVariable Long id) {
-        String resposta = openai.call("Gere um JSON com os seguintes campos Nome, Ingredientes, Modo de preparo, Calorias, Tempo de preparo, Tipo, Proteina, Calorias, Carboidratos, Gorduras, Acucar. Meu objetivo é " + objetivo + " . Gere somente o texto e sem nenhum texto explicativo");
-
-        return receitaService.desserializarReceita(resposta);
+    public List<Receita> gpt3(@RequestParam String objetivo, @PathVariable Long id) {
+        String resposta = openai.call("Gere um JSON com os seguintes campos Nome, Ingredientes, Modo de preparo, Calorias, Tempo de preparo, Tipo, Proteina, Calorias, Carboidratos, Gorduras, Acucar. O JSON deve ser com o [] e ' , ' para separar.  Meu objetivo é " + objetivo + " . Gere somente o texto e sem nenhum texto explicativo, gere 5 receitas diferentes.");
+        List<Receita> receita = receitaService.desserializarListaReceitas(resposta);
+         
+        return receita;
     }
 }

@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
-import sync.spctrum.apispring.domain.Receita.Receita;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -36,6 +35,4 @@ public class Usuario implements Serializable {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private Objetivo objetivo;
-
-    
 }
