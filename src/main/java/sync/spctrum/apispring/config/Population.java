@@ -1,6 +1,5 @@
 package sync.spctrum.apispring.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +9,6 @@ import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class Population implements CommandLineRunner {
@@ -27,11 +25,11 @@ public class Population implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Usuario m1 = new Usuario(1L, "Winycios", "winycios@gmail.com", passwordEncoder.encode("Madalena13#"), "", LocalDate.of(2008, 2, 15), "Homem", 64.5, "Basico", true,10, new Objetivo());
+        Usuario m1 = new Usuario(1L, "Winycios", "winycios@gmail.com", passwordEncoder.encode("Madalena13#"), "", "Perder peso", LocalDate.of(2008, 2, 15), "Homem", 64.5, 175, "Basico", true, 10, new Objetivo());
         m1.setObjetivo(new Objetivo(1L, "Ser forte", m1));
-        Usuario m2 = new Usuario(2L, "Ana", "Ana@gmail.com", passwordEncoder.encode("Madalena15#"), "", LocalDate.of(2007, 5, 13), "Mulher", 70.8, "Basico", false,3, new Objetivo());
+        Usuario m2 = new Usuario(2L, "Ana", "Ana@gmail.com", passwordEncoder.encode("Madalena15#"), "", "Perder peso", LocalDate.of(2007, 5, 13), "Mulher", 70.8, 160, "Basico", false, 3, new Objetivo());
         m2.setObjetivo(new Objetivo(2L, "Ser Feliz", m2));
-        Usuario m3 = new Usuario(3L, "Gustavo", "Gustavo@gmail.com", passwordEncoder.encode("Madalena1#"), "", LocalDate.of(2005, 1, 10), "Homem", 100.0, "Basico", true, 1,new Objetivo());
+        Usuario m3 = new Usuario(3L, "Gustavo", "Gustavo@gmail.com", passwordEncoder.encode("Madalena1#"), "", "Ganhar massa muscular", LocalDate.of(2005, 1, 10), "Homem", 100.0, 180, "Basico", true, 1, new Objetivo());
         m3.setObjetivo(new Objetivo(3L, "Pegar mulher", m3));
 
         usuarioRepository.saveAll(Arrays.asList(m1, m2, m3));

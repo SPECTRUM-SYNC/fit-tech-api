@@ -23,9 +23,11 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String img;
+    private String meta;
     private LocalDate dataNascimento;
     private String genero;
     private Double peso;
+    private Integer altura;
     private String nivelCondicao;
     private Boolean contaAtiva;
     private int pontuacao;
