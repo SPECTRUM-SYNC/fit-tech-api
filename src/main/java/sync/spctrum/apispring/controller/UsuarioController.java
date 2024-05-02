@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sync.spctrum.apispring.domain.Usuario.ListObject;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
@@ -27,8 +28,9 @@ import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 
 @RestController
@@ -40,7 +42,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
     private ListObject<Usuario> listaTopUsuarios;
 
-    public UsuarioController(){
+    public UsuarioController() {
         listaTopUsuarios = new ListObject<>(5);
     }
 
@@ -53,15 +55,10 @@ public class UsuarioController {
 
     @ApiResponse(responseCode = "201", description = "Usuário adicionado no ranking")
     @PostMapping("/adicionar-top-ranking")
-    public void adicionarUsuarioRanking(@RequestBody Usuario usuario){
+    public void adicionarUsuarioRanking(@RequestBody Usuario usuario) {
         listaTopUsuarios.adiciona(usuario);
     }
 
-    @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso.")
-    @DeleteMapping("/remover/{indice}")
-    public void removerPorIndiceUsuarioRanking(@PathVariable int indice) {
-        listaTopUsuarios.removePeloIndice(indice);
-    }
 
     @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso.")
     @DeleteMapping("/remover")
@@ -108,6 +105,13 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(UsuarioMapper.toListRespostaDTO(usuarioList));
     }
 
+
+    @ApiResponse(responseCode = "200", description = "os três usários com mais pontuação")
+    @GetMapping(value = "/pontuacao")
+    public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuariosPontuacao(){
+        return ResponseEntity.status(200).body(usuarioService.usuariosPontuacao());
+    }
+
     @ApiResponse(responseCode = "200", description = "Mostrando usuários por status.")
     @GetMapping("/statusUsuario")
     public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuarioStatus(@RequestParam Boolean contaAtiva) {
@@ -136,7 +140,7 @@ public class UsuarioController {
 
     @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso.")
     @PostMapping("/login/google")
-    public ResponseEntity<UsuarioTokenDTO> postLoginGoogle(@RequestBody @Valid  UsuarioLoginGoogleDTO usuarioLoginDto) {
+    public ResponseEntity<UsuarioTokenDTO> postLoginGoogle(@RequestBody @Valid UsuarioLoginGoogleDTO usuarioLoginDto) {
         UsuarioTokenDTO usuarioTokenDto = this.usuarioService.autenticarGoogle(usuarioLoginDto);
         return ResponseEntity.status(200).body(usuarioTokenDto);
     }
@@ -147,14 +151,31 @@ public class UsuarioController {
         Usuario usuarioAtualizado = procurarUsuarioPorId(id);
 
         usuarioAtualizado.setNome(usuario.getNome());
+        usuarioAtualizado.setGenero(usuario.getGenero());
         usuarioAtualizado.setPeso(usuario.getPeso());
+        usuarioAtualizado.setAltura(usuario.getAltura());
+        usuarioAtualizado.setDataNascimento(usuario.getDataNascimento());
+        usuarioAtualizado.setMeta(usuario.getMeta());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
+
         usuarioRepository.save(usuarioAtualizado);
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
     }
 
+    @ApiResponse(responseCode = "200", description = "Imagem atualizada com sucesso .")
+    @PatchMapping(value = "imagem/{id}")
+    public ResponseEntity<Void> atualizarImagem(@PathVariable Long id, @RequestParam MultipartFile imageFile) {
+        try {
+            usuarioService.atualizarImage(id, imageFile);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @ApiResponse(responseCode = "200", description = "Usuário ativado com sucesso.")
     @PatchMapping("/{id}/ativar")
+
     public ResponseEntity<UsuarioResponseDTO> patchAtivarContaUsuario(@PathVariable Long id) {
         Usuario usuario = procurarUsuarioPorId(id);
         if (usuario.getContaAtiva()) {
@@ -187,14 +208,13 @@ public class UsuarioController {
     @PostMapping("/enviar-email")
     public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
 
-        if (validEmailExistente(emailDTO.getPara()) == true){
+        if (validEmailExistente(emailDTO.getPara())) {
 
             emailService.enviarEmail(emailDTO.getPara(), emailDTO.getNome());
             return ResponseEntity.ok().body("E-mail enviado com sucesso!");
-        }else {
+        } else {
             return ResponseEntity.badRequest().body("E-mail não existe!");
         }
-
     }
 
     @GetMapping("/download")
@@ -207,22 +227,25 @@ public class UsuarioController {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             OutputStreamWriter writer = new OutputStreamWriter(baos);
 
-             String teste = String.format("%6s; %-22s; %4s; %9s; %-30s; %8s; %10s; %10s \n","ID","NOME","PESO", "GENERO","E-MAIL", "STATUS CONTA","DATA NASC","NIVEL");
+            String teste = String.format("%-22s; %4s; %9s; %-30s; %8s; %10s; %10s; %10s; %5s; %5s \n",
+                    "NOME", "PESO", "GENERO", "E-MAIL", "STATUS CONTA", "DATA NASC", "NIVEL", "META", "ALTURA", "PONTUACAO");
             writer.write(teste);
 
             // Escreva os dados no OutputStreamWriter
             for (UsuarioResponseDTO linha : dados) {
-               Long idUsuario = linha.getId();
                 String nomeUsuario = linha.getNome();
                 Double pesoUsuario = linha.getPeso();
                 String generoUsuario = linha.getGenero();
                 String emailUsuario = linha.getEmail();
-                String contaAtivaUsuario = linha.getContaAtiva()? "Ativa" : "Desativa";
+                String contaAtivaUsuario = linha.getContaAtiva() ? "Ativa" : "Desativa";
                 String dataNascimentoUsuario = linha.getDataNascimento().toString();
                 String nivelCondicaoUsuario = linha.getNivelCondicao();
+                String meta = linha.getMeta();
+                String altura = String.valueOf(linha.getAltura());
+                String pontuacao = String.valueOf(linha.getPontuacao());
 
-                writer.write( idUsuario + ";" + nomeUsuario + ";" + pesoUsuario + ";" + generoUsuario + ";" + emailUsuario + ";" +
-                        contaAtivaUsuario + ";" + dataNascimentoUsuario + ";"  + nivelCondicaoUsuario +  "\n");
+                writer.write(nomeUsuario + ";" + pesoUsuario + ";" + generoUsuario + ";" + emailUsuario + ";" +
+                        contaAtivaUsuario + ";" + dataNascimentoUsuario + ";" + nivelCondicaoUsuario + ";" + meta + ";" + altura + ";" + pontuacao + ";" + "\n");
             }
 
             writer.close();

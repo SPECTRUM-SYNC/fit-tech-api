@@ -17,13 +17,14 @@ public class UsuarioResponseDTO {
     private Long id;
     private String nome;
     private String email;
-    private String senha;
     private String img;
     private LocalDate dataNascimento;
     private String genero;
     private Double peso;
+    private Integer altura;
     private String nivelCondicao;
+    private String meta;
     private Boolean contaAtiva;
-    private ObjetivoResponseDTO objetivo;
     private int pontuacao;
+    private ObjetivoResponseDTO objetivo;
 }

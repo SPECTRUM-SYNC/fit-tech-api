@@ -6,6 +6,7 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class UsuarioMapper {
     public static UsuarioResponseDTO toRespostaDTO(Usuario usuario) {
         return model.map(usuario, UsuarioResponseDTO.class);
     }
+
 
     public static List<UsuarioResponseDTO> toListRespostaDTO(List<Usuario> usuarios) {
         return usuarios.stream().map(UsuarioMapper::toRespostaDTO).toList();
