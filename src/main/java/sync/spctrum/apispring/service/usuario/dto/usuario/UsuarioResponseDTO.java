@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sync.spctrum.apispring.service.objetivo.dto.objetivo.ObjetivoResponseDTO;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +18,7 @@ public class UsuarioResponseDTO {
     private String nome;
     private String email;
     private String img;
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
     private String genero;
     private Double peso;
     private Integer altura;

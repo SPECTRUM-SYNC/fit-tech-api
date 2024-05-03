@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
+import sync.spctrum.apispring.domain.Receita.Receita;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.List; // Import corrigido para java.util.List
 
 @Getter
 @Setter
@@ -24,7 +26,7 @@ public class Usuario implements Serializable {
     private String senha;
     private String img;
     private String meta;
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
     private String genero;
     private Double peso;
     private Integer altura;
@@ -32,7 +34,27 @@ public class Usuario implements Serializable {
     private Boolean contaAtiva;
     private int pontuacao;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Receita> receitas;
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private Objetivo objetivo;
+
+    // personalizado
+    public Usuario(String nome, String email, String senha, String img, String meta, Date dataNascimento, String genero, Double peso, Integer altura, String nivelCondicao, Boolean contaAtiva, int pontuacao, Objetivo objetivo) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.img = img;
+        this.meta = meta;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.peso = peso;
+        this.altura = altura;
+        this.nivelCondicao = nivelCondicao;
+        this.contaAtiva = contaAtiva;
+        this.pontuacao = pontuacao;
+        this.objetivo = objetivo;
+    }
 }
