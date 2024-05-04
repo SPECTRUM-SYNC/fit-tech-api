@@ -98,7 +98,6 @@ public class UsuarioService {
             blobClient.upload(inputStream, imageFile.getSize(), true);
             String imageUrl = blobClient.getBlobUrl();
 
-
             usuario.setImg(imageUrl);
             usuarioRepository.save(usuario);
         } catch (IOException e) {
@@ -113,11 +112,10 @@ public class UsuarioService {
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
-        Usuario usuarioAutenticado =
-                usuarioRepository.findByEmail(usuarioLoginDto.getEmail())
-                        .orElseThrow(
-                                () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
-                        );
+        Usuario usuarioAutenticado = usuarioRepository.findByEmail(usuarioLoginDto.getEmail()).orElseThrow(() -> new ResponseStatusException(404, "Email do usuário não cadastrado", null));
+        if (!usuarioAutenticado.getContaAtiva()) {
+            throw new TransactionNotAcceptable("Conta inativada.");
+        }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -129,11 +127,14 @@ public class UsuarioService {
     public UsuarioTokenDTO autenticarGoogle(UsuarioLoginGoogleDTO usuarioLoginDto) {
 
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
-                usuarioLoginDto.getEmail(), usuarioLoginDto.getNome());
+                usuarioLoginDto.getEmail(), usuarioLoginDto.getEmail());
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
         Usuario usuarioAutenticado = usuarioRepository.findByEmail(usuarioLoginDto.getEmail()).orElseThrow(() -> new ResponseStatusException(404, "Email do usuário não cadastrado", null));
+        if (!usuarioAutenticado.getContaAtiva()) {
+            throw new TransactionNotAcceptable("Conta inativada.");
+        }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

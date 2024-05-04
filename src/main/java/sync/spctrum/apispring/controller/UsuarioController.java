@@ -3,11 +3,11 @@ package sync.spctrum.apispring.controller;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sync.spctrum.apispring.domain.Usuario.ListObject;
@@ -27,6 +27,7 @@ import sync.spctrum.apispring.service.usuario.dto.modelMapper.UsuarioMapper;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
+import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdatePerfilDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,17 +41,19 @@ public class UsuarioController {
     private EmailService emailService;
     private UsuarioService usuarioService;
     private UsuarioRepository usuarioRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     private ListObject<Usuario> listaTopUsuarios;
 
-    public UsuarioController() {
-        listaTopUsuarios = new ListObject<>(5);
-    }
 
-    @Autowired
-    public UsuarioController(EmailService emailService, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public UsuarioController(EmailService emailService, UsuarioService usuarioService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.emailService = emailService;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+        listaTopUsuarios = new ListObject<>(5);
+
     }
 
     @ApiResponse(responseCode = "201", description = "Usuário adicionado no ranking")
@@ -108,7 +111,7 @@ public class UsuarioController {
 
     @ApiResponse(responseCode = "200", description = "os três usários com mais pontuação")
     @GetMapping(value = "/pontuacao")
-    public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuariosPontuacao(){
+    public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuariosPontuacao() {
         return ResponseEntity.status(200).body(usuarioService.usuariosPontuacao());
     }
 
@@ -153,6 +156,23 @@ public class UsuarioController {
         usuarioAtualizado.setNome(usuario.getNome());
         usuarioAtualizado.setGenero(usuario.getGenero());
         usuarioAtualizado.setPeso(usuario.getPeso());
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+        usuarioAtualizado.setSenha(senhaCriptografada);
+        usuarioAtualizado.setAltura(usuario.getAltura());
+        usuarioAtualizado.setDataNascimento(usuario.getDataNascimento());
+        usuarioAtualizado.setMeta(usuario.getMeta());
+        usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
+
+        usuarioRepository.save(usuarioAtualizado);
+        return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
+    }
+
+    @ApiResponse(responseCode = "200", description = "Usuário escolhido atualizado com sucesso.")
+    @PutMapping("perfil/{id}")
+    public ResponseEntity<UsuarioResponseDTO> putAtualizarPerfil(@Valid @RequestBody UsuarioUpdatePerfilDTO usuario, @PathVariable Long id) {
+        Usuario usuarioAtualizado = procurarUsuarioPorId(id);
+
+        usuarioAtualizado.setNome(usuario.getNome());
         usuarioAtualizado.setAltura(usuario.getAltura());
         usuarioAtualizado.setDataNascimento(usuario.getDataNascimento());
         usuarioAtualizado.setMeta(usuario.getMeta());
@@ -207,13 +227,19 @@ public class UsuarioController {
 
     @PostMapping("/enviar-email")
     public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
+        String destinatario = emailDTO.getPara();
+        String nome = emailDTO.getNome();
 
-        if (validEmailExistente(emailDTO.getPara())) {
-
-            emailService.enviarEmail(emailDTO.getPara(), emailDTO.getNome());
-            return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+        if (validEmailExistente(destinatario)) {
+            try {
+                emailService.enviarEmail(destinatario, nome);
+                return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                        .body("Erro ao enviar e-mail: " + e.getMessage());
+            }
         } else {
-            return ResponseEntity.badRequest().body("E-mail não existe!");
+            throw new ResourceNotFound("Email não encontrado");
         }
     }
 
