@@ -28,7 +28,7 @@ public class UsuarioDetalhesGoogleDTO implements UserDetails {
 
     @Override
     public String getPassword() {
-        return nome;
+        return email;
     }
 
     @Override

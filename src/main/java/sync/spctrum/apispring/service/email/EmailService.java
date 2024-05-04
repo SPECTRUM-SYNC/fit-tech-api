@@ -31,14 +31,14 @@ public class EmailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        Usuario user = usuarioRepository.findByEmail(para).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%¨&*()_+-={`^}:><.,/?|";
-        String novaSenha = RandomStringUtils.random(10, caracteres);
-        String senhaCriptografada = passwordEncoder.encode(novaSenha);
-        user.setSenha(senhaCriptografada);
-        usuarioRepository.save(user);
-
         try {
+            Usuario user = usuarioRepository.findByEmail(para).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%¨&*()_+-={`^}:><.,/?|";
+            String novaSenha = RandomStringUtils.random(10, caracteres);
+            String senhaCriptografada = passwordEncoder.encode(novaSenha);
+            user.setSenha(senhaCriptografada);
+            usuarioRepository.save(user);
+
             helper.setTo(para);
             helper.setSubject("Redefinição de Senha");
             helper.setText(
