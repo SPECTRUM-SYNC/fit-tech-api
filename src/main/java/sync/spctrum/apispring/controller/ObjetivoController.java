@@ -1,6 +1,7 @@
 package sync.spctrum.apispring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/objetivos")
+@SecurityRequirement(name = "Bearer")
 public class ObjetivoController {
 
     private final ObjetivoRepository objetivoRepository;

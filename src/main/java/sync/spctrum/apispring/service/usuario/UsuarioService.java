@@ -143,7 +143,7 @@ public class UsuarioService {
         return UsuarioMapper.toToken(usuarioAutenticado, token);
     }
 
-    private Usuario procurarUsuarioPorId(Long id) {
+    public Usuario procurarUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound("ID : " + id));
     }
 }
