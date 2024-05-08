@@ -3,6 +3,8 @@ package sync.spctrum.apispring.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
+import sync.spctrum.apispring.domain.HistoricoPeso.Repository.HistoricoPesoRepository;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
@@ -10,6 +12,7 @@ import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 @Configuration
@@ -17,10 +20,13 @@ public class Population implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final HistoricoPesoRepository historicoPesoRepository;
+
     private final PasswordEncoder passwordEncoder;
 
-    public Population(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public Population(UsuarioRepository usuarioRepository, HistoricoPesoRepository historicoPesoRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.historicoPesoRepository = historicoPesoRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -28,13 +34,14 @@ public class Population implements CommandLineRunner {
     public void run(String... args) {
 
         Usuario m1 = new Usuario();
+
         m1.setNome("Winycios");
         m1.setEmail("winycios@gmail.com");
         m1.setSenha(passwordEncoder.encode("Madalena13#"));
         m1.setMeta("Perder peso");
         m1.setDataNascimento(Date.from(LocalDate.of(2000, 10, 10).atStartOfDay(ZoneOffset.UTC).toInstant()));
         m1.setGenero("Homem");
-        m1.setPeso(64.5);
+        m1.setPeso(65.0);
         m1.setAltura(175);
         m1.setNivelCondicao("Basico");
         m1.setContaAtiva(true);
@@ -70,5 +77,25 @@ public class Population implements CommandLineRunner {
         m3.setObjetivo(new Objetivo(3L, "Pegar mulher", m3));
 
         usuarioRepository.saveAll(Arrays.asList(m1, m2, m3));
+
+        Calendar calendario = Calendar.getInstance();
+
+        calendario.set(2021, Calendar.JUNE, 17);
+        Date data = calendario.getTime();
+        HistoricoPeso hp1 = new HistoricoPeso(null, data, 50.0, 60.0, m1);
+
+        calendario.set(2021, Calendar.JUNE, 18);
+        Date data2 = calendario.getTime();
+        HistoricoPeso hp2 = new HistoricoPeso(null, data2, 55.0, 60.0, m1);
+
+        calendario.set(2021, Calendar.JUNE, 19);
+        Date data3 = calendario.getTime();
+        HistoricoPeso hp3 = new HistoricoPeso(null, data3, 60.0, 80.0, m1);
+
+        calendario.set(2021, Calendar.JUNE, 20);
+        Date data4 = calendario.getTime();
+        HistoricoPeso hp4 = new HistoricoPeso(null, data4, 65.0, 80.0, m1);
+
+        historicoPesoRepository.saveAll(Arrays.asList(hp1, hp2, hp3, hp4));
     }
 }
