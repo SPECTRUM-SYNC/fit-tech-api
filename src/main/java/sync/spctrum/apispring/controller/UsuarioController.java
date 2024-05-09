@@ -18,6 +18,8 @@ import sync.spctrum.apispring.exception.ResourceNotFound;
 import sync.spctrum.apispring.exception.TransactionNotAcceptable;
 import sync.spctrum.apispring.service.email.EmailService;
 import sync.spctrum.apispring.service.email.dto.EmailDTO;
+import sync.spctrum.apispring.service.historicoPeso.HistoricoPesoService;
+import sync.spctrum.apispring.service.historicoPeso.dto.peso.HistoricoPesoCreateDTO;
 import sync.spctrum.apispring.service.usuario.QuickSort;
 import sync.spctrum.apispring.service.usuario.UsuarioService;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginDTO;
@@ -32,6 +34,7 @@ import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdatePerfilDTO
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,14 +45,16 @@ public class UsuarioController {
     private UsuarioService usuarioService;
     private UsuarioRepository usuarioRepository;
 
+    private final HistoricoPesoService pesoService;
     private final PasswordEncoder passwordEncoder;
 
     private ListObject<Usuario> listaTopUsuarios;
 
 
-    public UsuarioController(EmailService emailService, UsuarioService usuarioService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioController(EmailService emailService, HistoricoPesoService historicoPesoService, UsuarioService usuarioService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.emailService = emailService;
         this.usuarioService = usuarioService;
+        this.pesoService = historicoPesoService;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         listaTopUsuarios = new ListObject<>(5);
@@ -163,6 +168,9 @@ public class UsuarioController {
         usuarioAtualizado.setMeta(usuario.getMeta());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
 
+        pesoService.postPeso(new HistoricoPesoCreateDTO(new Date(), usuario.getPeso(), null), id);
+
+
         usuarioRepository.save(usuarioAtualizado);
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
     }
@@ -264,7 +272,7 @@ public class UsuarioController {
                 String generoUsuario = linha.getGenero();
                 String emailUsuario = linha.getEmail();
                 String contaAtivaUsuario = linha.getContaAtiva() ? "Ativa" : "Desativa";
-                String dataNascimentoUsuario = linha.getDataNascimento().toString();
+                String dataNascimentoUsuario = String.valueOf(linha.getDataNascimento());
                 String nivelCondicaoUsuario = linha.getNivelCondicao();
                 String meta = linha.getMeta();
                 String altura = String.valueOf(linha.getAltura());

@@ -33,14 +33,20 @@ public class Population implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
+        Calendar calendario = Calendar.getInstance();
+
         Usuario m1 = new Usuario();
+
+        calendario.set(2000, Calendar.SEPTEMBER, 13);
+        Date dataUser = calendario.getTime();
 
         m1.setNome("Winycios");
         m1.setEmail("winycios@gmail.com");
         m1.setSenha(passwordEncoder.encode("Madalena13#"));
         m1.setMeta("Perder peso");
-        m1.setDataNascimento(Date.from(LocalDate.of(2000, 10, 10).atStartOfDay(ZoneOffset.UTC).toInstant()));
+        m1.setDataNascimento(dataUser);
         m1.setGenero("Homem");
+        //m1.setImg("https://fittech500.blob.core.windows.net/blob/Winycios_1");
         m1.setPeso(65.0);
         m1.setAltura(175);
         m1.setNivelCondicao("Basico");
@@ -48,28 +54,36 @@ public class Population implements CommandLineRunner {
         m1.setPontuacao(10);
         m1.setObjetivo(new Objetivo(1L, "Ser forte", m1));
 
+        calendario.set(2004, Calendar.AUGUST, 8);
+        Date dataUser2 = calendario.getTime();
+
         Usuario m2 = new Usuario();
         m2.setNome("Ana");
         m2.setEmail("ana@gmail.com");
         m2.setSenha(passwordEncoder.encode("Madalena15#"));
         m2.setMeta("Perder peso");
-        m1.setDataNascimento(Date.from(LocalDate.of(2000, 10, 10).atStartOfDay(ZoneOffset.UTC).toInstant()));
+        m2.setDataNascimento(dataUser2);
         m2.setGenero("Mulher");
         m2.setPeso(70.8);
+        //m2.setImg("https://fittech500.blob.core.windows.net/blob/ana.jpg");
         m2.setAltura(160);
         m2.setNivelCondicao("Basico");
         m2.setContaAtiva(false);
         m2.setPontuacao(3);
         m2.setObjetivo(new Objetivo(2L, "Ser Feliz", m2));
 
+        calendario.set(1995, Calendar.APRIL, 20);
+        Date dataUser3 = calendario.getTime();
+
         Usuario m3 = new Usuario();
         m3.setNome("Gustavo");
         m3.setEmail("gustavo@gmail.com");
         m3.setSenha(passwordEncoder.encode("Madalena1#"));
         m3.setMeta("Ganhar massa muscular");
-        m1.setDataNascimento(Date.from(LocalDate.of(2000, 10, 10).atStartOfDay(ZoneOffset.UTC).toInstant()));
+        m3.setDataNascimento(dataUser3);
         m3.setGenero("Homem");
         m3.setPeso(100.0);
+        //m3.setImg("https://fittech500.blob.core.windows.net/blob/dr.jpg");
         m3.setAltura(180);
         m3.setNivelCondicao("Basico");
         m3.setContaAtiva(true);
@@ -78,23 +92,21 @@ public class Population implements CommandLineRunner {
 
         usuarioRepository.saveAll(Arrays.asList(m1, m2, m3));
 
-        Calendar calendario = Calendar.getInstance();
-
         calendario.set(2021, Calendar.JUNE, 17);
         Date data = calendario.getTime();
         HistoricoPeso hp1 = new HistoricoPeso(null, data, 50.0, 60.0, m1);
 
         calendario.set(2021, Calendar.JUNE, 18);
         Date data2 = calendario.getTime();
-        HistoricoPeso hp2 = new HistoricoPeso(null, data2, 55.0, 60.0, m1);
+        HistoricoPeso hp2 = new HistoricoPeso(null, data2, 60.0, 60.0, m1);
 
-        calendario.set(2021, Calendar.JUNE, 19);
+        calendario.set(2021, Calendar.JUNE, 22);
         Date data3 = calendario.getTime();
-        HistoricoPeso hp3 = new HistoricoPeso(null, data3, 60.0, 80.0, m1);
+        HistoricoPeso hp3 = new HistoricoPeso(null, data3, 62.0, 70.0, m1);
 
-        calendario.set(2021, Calendar.JUNE, 20);
+        calendario.set(2021, Calendar.JUNE, 27);
         Date data4 = calendario.getTime();
-        HistoricoPeso hp4 = new HistoricoPeso(null, data4, 65.0, 80.0, m1);
+        HistoricoPeso hp4 = new HistoricoPeso(null, data4, 62.0, 70.0, m1);
 
         historicoPesoRepository.saveAll(Arrays.asList(hp1, hp2, hp3, hp4));
     }

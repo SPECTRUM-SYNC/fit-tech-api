@@ -2,7 +2,6 @@ package sync.spctrum.apispring.service.historicoPeso.dto.peso;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -23,4 +22,9 @@ public class HistoricoPesoCreateDTO {
     @NotNull(message = "Peso não pode ser nulo")
     private Double pesoMeta;
 
+    public HistoricoPesoCreateDTO(Date dataPostagem, Double peso, Double pesoMeta) {
+        this.dataPostagem = dataPostagem;
+        this.peso = peso;
+        this.pesoMeta = pesoMeta;
+    }
 }
