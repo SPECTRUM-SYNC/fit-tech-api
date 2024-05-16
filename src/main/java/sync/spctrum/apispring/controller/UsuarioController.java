@@ -253,45 +253,50 @@ public class UsuarioController {
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadCSV() {
+        List<Usuario> usuarioList = usuarioRepository.findAll();
         try {
-            List<Usuario> usuarioList = usuarioRepository.findAll();
+        List<UsuarioResponseDTO> dados = UsuarioMapper.toListRespostaDTO(usuarioList);
 
-            List<UsuarioResponseDTO> dados = UsuarioMapper.toListRespostaDTO(usuarioList);
+        // Cria a matriz bidimensional
+        String[][] matrizDados = new String[dados.size() + 1][10];
+        
+        // Cabeçalho
+        matrizDados[0] = new String[]{"NOME", "PESO", "GENERO", "E-MAIL", "STATUS CONTA", "DATA NASC", "NIVEL", "META", "ALTURA", "PONTUACAO"};
+        
+        // Preenche a matriz com os dados dos usuários
+        for (int i = 0; i < dados.size(); i++) {
+            UsuarioResponseDTO linha = dados.get(i);
+            matrizDados[i + 1][0] = linha.getNome();
+            matrizDados[i + 1][1] = String.valueOf(linha.getPeso());
+            matrizDados[i + 1][2] = linha.getGenero();
+            matrizDados[i + 1][3] = linha.getEmail();
+            matrizDados[i + 1][4] = linha.getContaAtiva() ? "Ativa" : "Desativa";
+            matrizDados[i + 1][5] = String.valueOf(linha.getDataNascimento());
+            matrizDados[i + 1][6] = linha.getNivelCondicao();
+            matrizDados[i + 1][7] = linha.getMeta();
+            matrizDados[i + 1][8] = String.valueOf(linha.getAltura());
+            matrizDados[i + 1][9] = String.valueOf(linha.getPontuacao());
+        }
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            OutputStreamWriter writer = new OutputStreamWriter(baos);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        OutputStreamWriter writer = new OutputStreamWriter(baos);
 
-            String teste = String.format("%-22s; %4s; %9s; %-30s; %8s; %10s; %10s; %10s; %5s; %5s \n",
-                    "NOME", "PESO", "GENERO", "E-MAIL", "STATUS CONTA", "DATA NASC", "NIVEL", "META", "ALTURA", "PONTUACAO");
-            writer.write(teste);
+        for (String[] linha : matrizDados) {
+            writer.write(String.join(";", linha) + "\n");
+        }
 
-            // Escreva os dados no OutputStreamWriter
-            for (UsuarioResponseDTO linha : dados) {
-                String nomeUsuario = linha.getNome();
-                Double pesoUsuario = linha.getPeso();
-                String generoUsuario = linha.getGenero();
-                String emailUsuario = linha.getEmail();
-                String contaAtivaUsuario = linha.getContaAtiva() ? "Ativa" : "Desativa";
-                String dataNascimentoUsuario = String.valueOf(linha.getDataNascimento());
-                String nivelCondicaoUsuario = linha.getNivelCondicao();
-                String meta = linha.getMeta();
-                String altura = String.valueOf(linha.getAltura());
-                String pontuacao = String.valueOf(linha.getPontuacao());
+        writer.close();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("text/csv"));
+        headers.setContentDispositionFormData("attachment", "dados.csv");
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
 
-                writer.write(nomeUsuario + ";" + pesoUsuario + ";" + generoUsuario + ";" + emailUsuario + ";" +
-                        contaAtivaUsuario + ";" + dataNascimentoUsuario + ";" + nivelCondicaoUsuario + ";" + meta + ";" + altura + ";" + pontuacao + ";" + "\n");
-            }
-
-            writer.close();
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("text/csv"));
-            headers.setContentDispositionFormData("attachment", "dados.csv");
-            return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
     private boolean validEmailExistente(String email) {
