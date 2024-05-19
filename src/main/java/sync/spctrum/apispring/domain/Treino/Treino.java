@@ -1,4 +1,4 @@
-package sync.spctrum.apispring.domain.HistoricoPeso;
+package sync.spctrum.apispring.domain.Treino;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,24 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HistoricoPeso {
+public class Treino implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate dataPostagem;
-    private Double peso;
-    private Double pesoMeta;
+    private String descricao;
+    private LocalDate dataTreino;
+    private String status;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario", nullable = false)
     private Usuario usuario;
 }

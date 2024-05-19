@@ -34,6 +34,7 @@ import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdatePerfilDTO
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -59,31 +60,6 @@ public class UsuarioController {
         this.passwordEncoder = passwordEncoder;
         listaTopUsuarios = new ListObject<>(5);
 
-    }
-
-    @ApiResponse(responseCode = "201", description = "Usuário adicionado no ranking")
-    @PostMapping("/adicionar-top-ranking")
-    public void adicionarUsuarioRanking(@RequestBody Usuario usuario) {
-        listaTopUsuarios.adiciona(usuario);
-    }
-
-
-    @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso.")
-    @DeleteMapping("/remover")
-    public void removerUsuarioRanking(@RequestBody Usuario usuario) {
-        listaTopUsuarios.removeElemento(usuario);
-    }
-
-    @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso.")
-    @GetMapping("/buscar/{elemento}")
-    public int buscarUsuarioRanking(@PathVariable Usuario elemento) {
-        return listaTopUsuarios.busca(elemento);
-    }
-
-    @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no ranking.")
-    @GetMapping("/exibir")
-    public void exibirUsuariosRanking() {
-        listaTopUsuarios.exibe();
     }
 
     @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
@@ -168,7 +144,7 @@ public class UsuarioController {
         usuarioAtualizado.setMeta(usuario.getMeta());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
 
-        pesoService.postPeso(new HistoricoPesoCreateDTO(new Date(), usuario.getPeso(), null), id);
+        pesoService.postPeso(new HistoricoPesoCreateDTO(LocalDate.now(), usuario.getPeso(), usuario.getPeso()), id);
 
 
         usuarioRepository.save(usuarioAtualizado);
@@ -255,41 +231,41 @@ public class UsuarioController {
     public ResponseEntity<byte[]> downloadCSV() {
         List<Usuario> usuarioList = usuarioRepository.findAll();
         try {
-        List<UsuarioResponseDTO> dados = UsuarioMapper.toListRespostaDTO(usuarioList);
+            List<UsuarioResponseDTO> dados = UsuarioMapper.toListRespostaDTO(usuarioList);
 
-        // Cria a matriz bidimensional
-        String[][] matrizDados = new String[dados.size() + 1][10];
-        
-        // Cabeçalho
-        matrizDados[0] = new String[]{"NOME", "PESO", "GENERO", "E-MAIL", "STATUS CONTA", "DATA NASC", "NIVEL", "META", "ALTURA", "PONTUACAO"};
-        
-        // Preenche a matriz com os dados dos usuários
-        for (int i = 0; i < dados.size(); i++) {
-            UsuarioResponseDTO linha = dados.get(i);
-            matrizDados[i + 1][0] = linha.getNome();
-            matrizDados[i + 1][1] = String.valueOf(linha.getPeso());
-            matrizDados[i + 1][2] = linha.getGenero();
-            matrizDados[i + 1][3] = linha.getEmail();
-            matrizDados[i + 1][4] = linha.getContaAtiva() ? "Ativa" : "Desativa";
-            matrizDados[i + 1][5] = String.valueOf(linha.getDataNascimento());
-            matrizDados[i + 1][6] = linha.getNivelCondicao();
-            matrizDados[i + 1][7] = linha.getMeta();
-            matrizDados[i + 1][8] = String.valueOf(linha.getAltura());
-            matrizDados[i + 1][9] = String.valueOf(linha.getPontuacao());
-        }
+            // Cria a matriz bidimensional
+            String[][] matrizDados = new String[dados.size() + 1][10];
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        OutputStreamWriter writer = new OutputStreamWriter(baos);
+            // Cabeçalho
+            matrizDados[0] = new String[]{"NOME", "PESO", "GENERO", "E-MAIL", "STATUS CONTA", "DATA NASC", "NIVEL", "META", "ALTURA", "PONTUACAO"};
 
-        for (String[] linha : matrizDados) {
-            writer.write(String.join(";", linha) + "\n");
-        }
+            // Preenche a matriz com os dados dos usuários
+            for (int i = 0; i < dados.size(); i++) {
+                UsuarioResponseDTO linha = dados.get(i);
+                matrizDados[i + 1][0] = linha.getNome();
+                matrizDados[i + 1][1] = String.valueOf(linha.getPeso());
+                matrizDados[i + 1][2] = linha.getGenero();
+                matrizDados[i + 1][3] = linha.getEmail();
+                matrizDados[i + 1][4] = linha.getContaAtiva() ? "Ativa" : "Desativa";
+                matrizDados[i + 1][5] = String.valueOf(linha.getDataNascimento());
+                matrizDados[i + 1][6] = linha.getNivelCondicao();
+                matrizDados[i + 1][7] = linha.getMeta();
+                matrizDados[i + 1][8] = String.valueOf(linha.getAltura());
+                matrizDados[i + 1][9] = String.valueOf(linha.getPontuacao());
+            }
 
-        writer.close();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("text/csv"));
-        headers.setContentDispositionFormData("attachment", "dados.csv");
-        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            OutputStreamWriter writer = new OutputStreamWriter(baos);
+
+            for (String[] linha : matrizDados) {
+                writer.write(String.join(";", linha) + "\n");
+            }
+
+            writer.close();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("text/csv"));
+            headers.setContentDispositionFormData("attachment", "dados.csv");
+            return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -298,12 +274,38 @@ public class UsuarioController {
     }
 
 
-
     private boolean validEmailExistente(String email) {
         return usuarioRepository.findAll().stream().anyMatch(usuario -> usuario.getEmail().equals(email));
     }
 
     private Usuario procurarUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound("ID : " + id));
+    }
+
+
+    //    Lista OBJ
+    @ApiResponse(responseCode = "201", description = "Usuário adicionado no ranking")
+    @PostMapping("/adicionar-top-ranking")
+    public void adicionarUsuarioRanking(@RequestBody Usuario usuario) {
+        listaTopUsuarios.adiciona(usuario);
+    }
+
+
+    @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso.")
+    @DeleteMapping("/remover")
+    public void removerUsuarioRanking(@RequestBody Usuario usuario) {
+        listaTopUsuarios.removeElemento(usuario);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso.")
+    @GetMapping("/buscar/{elemento}")
+    public int buscarUsuarioRanking(@PathVariable Usuario elemento) {
+        return listaTopUsuarios.busca(elemento);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no ranking.")
+    @GetMapping("/exibir")
+    public void exibirUsuariosRanking() {
+        listaTopUsuarios.exibe();
     }
 }

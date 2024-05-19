@@ -5,12 +5,13 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
 public class HistoricoPesoCreateDTO {
 
-    private Date dataPostagem;
+    private LocalDate dataPostagem;
 
     @DecimalMax(value = "200.0")
     @DecimalMin(value = "40.0")
@@ -22,7 +23,7 @@ public class HistoricoPesoCreateDTO {
     @NotNull(message = "Peso não pode ser nulo")
     private Double pesoMeta;
 
-    public HistoricoPesoCreateDTO(Date dataPostagem, Double peso, Double pesoMeta) {
+    public HistoricoPesoCreateDTO(LocalDate dataPostagem, Double peso, Double pesoMeta) {
         this.dataPostagem = dataPostagem;
         this.peso = peso;
         this.pesoMeta = pesoMeta;
