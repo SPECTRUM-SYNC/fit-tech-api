@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import sync.spctrum.apispring.domain.Usuario.ListObject;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
@@ -231,6 +232,18 @@ public class UsuarioController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
         usuarioRepository.delete(procurarUsuarioPorId(id));
         return ResponseEntity.status(200).build();
+    }
+
+    @ApiResponse(responseCode = "200", description = "Senha redefinda com sucesso.")
+    @PostMapping("/redefinir-senha")
+    public ResponseEntity<String> redefinirSenha(@RequestBody String email) {
+        try {
+            usuarioService.solicitarRedefinicaoSenha(email);
+            return ResponseEntity.ok("Solicitação de redefinição de senha enviada com sucesso!");
+
+        } catch (ResponseStatusException responseStatusException) {
+            return ResponseEntity.status(responseStatusException.getStatusCode()).body(responseStatusException.getReason());
+        }
     }
 
     @PostMapping("/enviar-email")

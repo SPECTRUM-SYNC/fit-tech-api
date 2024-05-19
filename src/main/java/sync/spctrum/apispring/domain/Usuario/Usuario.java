@@ -9,6 +9,8 @@ import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Receita.Receita;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List; // Import corrigido para java.util.List
 
@@ -33,6 +35,7 @@ public class Usuario implements Serializable {
     private String nivelCondicao;
     private Boolean contaAtiva;
     private int pontuacao;
+    private LocalDateTime horaSenhaAtualizacao;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Receita> receitas;
@@ -56,5 +59,10 @@ public class Usuario implements Serializable {
         this.contaAtiva = contaAtiva;
         this.pontuacao = pontuacao;
         this.objetivo = objetivo;
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.horaSenhaAtualizacao = LocalDateTime.now();
     }
 }
