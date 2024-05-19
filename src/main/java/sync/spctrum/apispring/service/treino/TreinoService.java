@@ -30,9 +30,15 @@ public class TreinoService {
         return treinoRepository.findAllByUsuario_Id(id);
     }
 
+
     public Boolean findByTreinoAndUser(Long id) {
         Optional<Treino> treino = treinoRepository.findByDataTreinoAndUsuarioId(LocalDate.now(), id);
         return treino.isPresent();
+    }
+
+    public Treino existsByDataTreinoAndId(Long id) {
+        Optional<Treino> treino = treinoRepository.findByDataTreinoAndUsuarioId(LocalDate.now(), id);
+        return treino.orElseThrow(() -> new ResourceNotFound("ID : " + id));
     }
 
     public Treino findById(Long id) {

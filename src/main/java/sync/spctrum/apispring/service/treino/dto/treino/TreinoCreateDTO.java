@@ -15,6 +15,9 @@ public class TreinoCreateDTO {
     private LocalDate dataTreino;
     @NotBlank
     private String status;
+
+    @NotBlank
+    private String tipoTreino;
     @NotNull
     private Long usuarioId;
 }

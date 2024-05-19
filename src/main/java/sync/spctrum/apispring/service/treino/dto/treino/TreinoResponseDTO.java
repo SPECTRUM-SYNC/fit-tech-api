@@ -11,6 +11,7 @@ public class TreinoResponseDTO {
     private Long id;
     private String descricao;
     private LocalDate dataTreino;
+    private String tipoTreino;
     private String status;
     private UsuarioResponseDTO usuario;
 }

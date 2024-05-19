@@ -35,7 +35,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -90,7 +89,7 @@ public class UsuarioController {
     }
 
 
-    @ApiResponse(responseCode = "200", description = "os três usários com mais pontuação")
+    @ApiResponse(responseCode = "200", description = "os três usuários com mais pontuação")
     @GetMapping(value = "/pontuacao")
     public ResponseEntity<List<UsuarioResponseDTO>> getListarUsuariosPontuacao() {
         return ResponseEntity.status(200).body(usuarioService.usuariosPontuacao());
@@ -161,6 +160,16 @@ public class UsuarioController {
         usuarioAtualizado.setDataNascimento(usuario.getDataNascimento());
         usuarioAtualizado.setMeta(usuario.getMeta());
         usuarioAtualizado.setNivelCondicao(usuario.getNivelCondicao());
+
+        usuarioRepository.save(usuarioAtualizado);
+        return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));
+    }
+
+    @ApiResponse(responseCode = "200", description = "Atualizar pontuação do usuario.")
+    @PutMapping("pontuacao/{id}")
+    public ResponseEntity<UsuarioResponseDTO> putAtualizarPontuacao(@PathVariable Long id) {
+        Usuario usuarioAtualizado = procurarUsuarioPorId(id);
+        usuarioAtualizado.setPontuacao(usuarioAtualizado.getPontuacao() + 20);
 
         usuarioRepository.save(usuarioAtualizado);
         return ResponseEntity.status(200).body(UsuarioMapper.toRespostaDTO(usuarioAtualizado));

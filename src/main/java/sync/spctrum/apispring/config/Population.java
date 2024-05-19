@@ -42,7 +42,7 @@ public class Population implements CommandLineRunner {
         m1.setNome("Winycios");
         m1.setEmail("winycios@gmail.com");
         m1.setSenha(passwordEncoder.encode("Madalena13#"));
-        m1.setMeta("Perder peso");
+        m1.setMeta("PerderPeso");
         m1.setDataNascimento(dataUser);
         m1.setGenero("Homem");
         m1.setPeso(65.0);
@@ -59,7 +59,7 @@ public class Population implements CommandLineRunner {
         m2.setNome("Ana");
         m2.setEmail("ana@gmail.com");
         m2.setSenha(passwordEncoder.encode("Madalena15#"));
-        m2.setMeta("Perder peso");
+        m2.setMeta("PerderPeso");
         m2.setDataNascimento(dataUser2);
         m2.setGenero("Mulher");
         m2.setPeso(70.8);
@@ -76,7 +76,7 @@ public class Population implements CommandLineRunner {
         m3.setNome("Gustavo");
         m3.setEmail("gustavo@gmail.com");
         m3.setSenha(passwordEncoder.encode("Madalena1#"));
-        m3.setMeta("Ganhar massa muscular");
+        m3.setMeta("GanharMassa");
         m3.setDataNascimento(dataUser3);
         m3.setGenero("Homem");
         m3.setPeso(100.0);

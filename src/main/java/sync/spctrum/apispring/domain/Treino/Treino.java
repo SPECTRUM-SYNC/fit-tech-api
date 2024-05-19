@@ -22,6 +22,7 @@ public class Treino implements Serializable {
     private Long id;
     private String descricao;
     private LocalDate dataTreino;
+    private String tipoTreino;
     private String status;
 
     @ManyToOne

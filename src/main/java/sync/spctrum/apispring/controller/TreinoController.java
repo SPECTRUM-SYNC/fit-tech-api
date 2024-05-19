@@ -35,6 +35,12 @@ public class TreinoController {
         return ResponseEntity.status(200).body(treinoService.findByTreinoAndUser(id));
     }
 
+    @ApiResponse(responseCode = "200", description = "Verifica o treino diario ")
+    @GetMapping(value = "validar/{id}")
+    public ResponseEntity<TreinoResponseDTO> getVerificarTreino(@PathVariable Long id) {
+        return ResponseEntity.status(200).body(TreinoMapper.toRespostaDTO(treinoService.existsByDataTreinoAndId(id)));
+    }
+
     @ApiResponse(responseCode = "200", description = "Listagem de todos os treinos por usuario")
     @GetMapping(value = "/usuario/{id}")
     public ResponseEntity<List<TreinoResponseDTO>> getListarTudoPorId(@PathVariable Long id) {
