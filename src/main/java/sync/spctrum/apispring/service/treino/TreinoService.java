@@ -50,4 +50,10 @@ public class TreinoService {
         treino.setUsuario(usuarioService.procurarUsuarioPorId(usuarioId));
         return treinoRepository.save(treino);
     }
+
+    public Treino putStatusTreino(Long id){
+        Treino treino = existsByDataTreinoAndId(id);
+        treino.setStatus("Feito");
+        return treinoRepository.save(treino);
+    }
 }

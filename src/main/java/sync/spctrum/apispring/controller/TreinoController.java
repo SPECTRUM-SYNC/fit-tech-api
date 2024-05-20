@@ -9,6 +9,7 @@ import sync.spctrum.apispring.service.treino.dto.modelMapper.TreinoMapper;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoCreateDTO;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoResponseDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -58,5 +59,11 @@ public class TreinoController {
     @PostMapping
     public ResponseEntity<TreinoResponseDTO> postTreino(@RequestBody TreinoCreateDTO treinoCreateDTO) {
         return ResponseEntity.status(201).body(TreinoMapper.toRespostaDTO(treinoService.save(TreinoMapper.toEntity(treinoCreateDTO), treinoCreateDTO.getUsuarioId())));
+    }
+
+    @ApiResponse(responseCode = "200", description = "Atualizar status treino")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TreinoResponseDTO> putStatusTreino(@PathVariable Long id) {
+        return ResponseEntity.status(201).body(TreinoMapper.toRespostaDTO(treinoService.putStatusTreino(id)));
     }
 }
