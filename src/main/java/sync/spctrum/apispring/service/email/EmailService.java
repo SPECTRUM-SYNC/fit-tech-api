@@ -27,22 +27,15 @@ public class EmailService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void enviarEmail(String para, String nome) {
+    public void enviarEmailRedefinicaoSenha(String destinatario, String novaSenha) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try {
-            Usuario user = usuarioRepository.findByEmail(para).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%¨&*()_+-={`^}:><.,/?|";
-            String novaSenha = RandomStringUtils.random(10, caracteres);
-            String senhaCriptografada = passwordEncoder.encode(novaSenha);
-            user.setSenha(senhaCriptografada);
-            usuarioRepository.save(user);
-
-            helper.setTo(para);
+            helper.setTo(destinatario);
             helper.setSubject("Redefinição de Senha");
             helper.setText(
-                    "Olá " + nome + "," +
+                    "Olá " + destinatario + "," +
                             "<br /><br />Você solicitou uma redefinição de senha para sua conta" +
                             "<br />Sua senha foi redefinida: " + novaSenha +
                             "<br /><br />Lembre-se, nunca compartilhe sua senha com ninguém!" +

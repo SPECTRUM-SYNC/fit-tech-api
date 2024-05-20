@@ -4,6 +4,7 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import jakarta.annotation.PostConstruct;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceNotFound;
 import sync.spctrum.apispring.exception.TransactionNotAcceptable;
+import sync.spctrum.apispring.service.email.EmailService;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginDTO;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginGoogleDTO;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
@@ -39,6 +41,7 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
+    private final EmailService emailService;
     @Value("${spring.cloud.azure.storage.blob.container-name}")
     private String containerName;
 
@@ -66,11 +69,12 @@ public class UsuarioService {
 
     private final Deque<Usuario> resetQueue = new ArrayDeque<>(2);
 
-    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, GerenciadorTokenJwt gerenciadorTokenJwt, AuthenticationManager authenticationManager) {
+    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, GerenciadorTokenJwt gerenciadorTokenJwt, AuthenticationManager authenticationManager, EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
         this.usuarioRepository = usuarioRepository;
         this.gerenciadorTokenJwt = gerenciadorTokenJwt;
         this.authenticationManager = authenticationManager;
+        this.emailService = emailService;
     }
 
     public List<UsuarioResponseDTO> usuariosPontuacao() {
@@ -163,8 +167,10 @@ public class UsuarioService {
 
     public UsuarioTokenDTO solicitarRedefinicaoSenha(String email){
         if (isPermitidoRedefinicaoSenha(email)){
-            resetQueue.addLast(usuarioRepository.findByEmail(email).orElseThrow(()
-            -> new ResponseStatusException(404, "Email ainda não cadastrado", null)));
+            Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new ResponseStatusException(404, "Email ainda não cadastrado", null));
+
+            resetQueue.addLast(usuario);
         }
         throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 2 minutos e tente novamente.", null);
     }
@@ -175,5 +181,10 @@ public class UsuarioService {
                 .filter(usuario -> usuario.getEmail().equals(email))
                 .filter(usuario -> now.minusMinutes(2).isBefore(usuario.getHoraSenhaAtualizacao()))
                 .count() < 2;
+    }
+    
+    public String gerarNovaSenha(){
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%¨&*()_+-={`^}:><.,/?|";
+        return RandomStringUtils.random(10, caracteres);
     }
 }

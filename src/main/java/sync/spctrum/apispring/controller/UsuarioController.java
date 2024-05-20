@@ -234,30 +234,17 @@ public class UsuarioController {
         return ResponseEntity.status(200).build();
     }
 
-    @ApiResponse(responseCode = "200", description = "Senha redefinda com sucesso.")
-    @PostMapping("/redefinir-senha")
-    public ResponseEntity<String> redefinirSenha(@RequestBody String email) {
-        try {
-            usuarioService.solicitarRedefinicaoSenha(email);
-            return ResponseEntity.ok("Solicitação de redefinição de senha enviada com sucesso!");
-
-        } catch (ResponseStatusException responseStatusException) {
-            return ResponseEntity.status(responseStatusException.getStatusCode()).body(responseStatusException.getReason());
-        }
-    }
-
     @PostMapping("/enviar-email")
     public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
         String destinatario = emailDTO.getPara();
-        String nome = emailDTO.getNome();
 
         if (validEmailExistente(destinatario)) {
             try {
-                emailService.enviarEmail(destinatario, nome);
-                return ResponseEntity.ok().body("E-mail enviado com sucesso!");
+                usuarioService.solicitarRedefinicaoSenha(destinatario);
+                return ResponseEntity.ok().body("\"Solicitação de redefinição de senha enviada com sucesso! Verifique seu email.");
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                        .body("Erro ao enviar e-mail: " + e.getMessage());
+                        .body("Erro ao solicitar redefinição de senha: " + e.getMessage());
             }
         } else {
             throw new ResourceNotFound("Email não encontrado");
