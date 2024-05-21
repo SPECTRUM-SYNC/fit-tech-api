@@ -4,11 +4,11 @@ import org.springframework.stereotype.Service;
 import sync.spctrum.apispring.domain.Treino.Repository.TreinoRepository;
 import sync.spctrum.apispring.domain.Treino.Treino;
 import sync.spctrum.apispring.exception.ResourceNotFound;
+import sync.spctrum.apispring.service.treino.dto.treino.TreinoCountDTO;
 import sync.spctrum.apispring.service.usuario.UsuarioService;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TreinoService {
@@ -30,14 +30,35 @@ public class TreinoService {
         return treinoRepository.findAllByUsuario_Id(id);
     }
 
+    public List<Treino> findByDataTreinoAndUsuarioId(Long id) {
+        return treinoRepository.findByDataTreinoAndUsuarioId(LocalDate.now(), id);
+    }
 
     public Boolean findByTreinoAndUser(Long id) {
-        Optional<Treino> treino = treinoRepository.findByDataTreinoAndUsuarioId(LocalDate.now(), id);
+        Optional<Treino> treino = treinoRepository.findByDataTreinoAndUsuarioIdAndDescricao(LocalDate.now(), id, "Diario");
         return treino.isPresent();
     }
 
+    public List<TreinoCountDTO> getTreinosPorDiaDaSemana(Long usuarioId) {
+        List<TreinoCountDTO> treinoCounts = treinoRepository.countTreinosByDiaDaSemana(usuarioId);
+
+        Map<String, Long> countsMap = new HashMap<>();
+        for (TreinoCountDTO count : treinoCounts) {
+            countsMap.put(count.getDiaDaSemana(), count.getQuantidadeTreinos());
+        }
+
+        String[] diasDaSemana = {"seg", "ter", "qua", "qui", "sex", "sáb", "dom"};
+        List<TreinoCountDTO> result = new ArrayList<>();
+
+        for (String dia : diasDaSemana) {
+            result.add(new TreinoCountDTO(dia, countsMap.getOrDefault(dia, 0L)));
+        }
+
+        return result;
+    }
+
     public Treino existsByDataTreinoAndId(Long id) {
-        Optional<Treino> treino = treinoRepository.findByDataTreinoAndUsuarioId(LocalDate.now(), id);
+        Optional<Treino> treino = treinoRepository.findByDataTreinoAndUsuarioIdAndDescricao(LocalDate.now(), id, "Diario");
         return treino.orElseThrow(() -> new ResourceNotFound("ID : " + id));
     }
 
@@ -51,7 +72,7 @@ public class TreinoService {
         return treinoRepository.save(treino);
     }
 
-    public Treino putStatusTreino(Long id){
+    public Treino putStatusTreino(Long id) {
         Treino treino = existsByDataTreinoAndId(id);
         treino.setStatus("Feito");
         return treinoRepository.save(treino);

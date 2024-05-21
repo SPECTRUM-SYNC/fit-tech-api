@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sync.spctrum.apispring.service.treino.TreinoService;
 import sync.spctrum.apispring.service.treino.dto.modelMapper.TreinoMapper;
+import sync.spctrum.apispring.service.treino.dto.treino.TreinoCountDTO;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoCreateDTO;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoResponseDTO;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -36,7 +36,7 @@ public class TreinoController {
         return ResponseEntity.status(200).body(treinoService.findByTreinoAndUser(id));
     }
 
-    @ApiResponse(responseCode = "200", description = "Verifica o treino diario ")
+    @ApiResponse(responseCode = "200", description = "Verifica o treino diario")
     @GetMapping(value = "validar/{id}")
     public ResponseEntity<TreinoResponseDTO> getVerificarTreino(@PathVariable Long id) {
         return ResponseEntity.status(200).body(TreinoMapper.toRespostaDTO(treinoService.existsByDataTreinoAndId(id)));
@@ -46,6 +46,17 @@ public class TreinoController {
     @GetMapping(value = "/usuario/{id}")
     public ResponseEntity<List<TreinoResponseDTO>> getListarTudoPorId(@PathVariable Long id) {
         List<TreinoResponseDTO> treinos = TreinoMapper.toListRespostaDTO(treinoService.findAllByUsuarioId(id));
+        return !treinos.isEmpty() ? ResponseEntity.status(200).body(treinos) : ResponseEntity.status(204).build();
+    }
+
+    @GetMapping("/por-dia-da-semana/{id}")
+    public ResponseEntity<List<TreinoCountDTO>> getTreinosPorDiaDaSemana(@PathVariable Long id) {
+        return ResponseEntity.status(200).body(treinoService.getTreinosPorDiaDaSemana(id));
+    }
+    @ApiResponse(responseCode = "200", description = "Listagem de todos os treinos por em um determinado dia do usuario")
+    @GetMapping(value = "/usuario/dia-atual/{id}")
+    public ResponseEntity<List<TreinoResponseDTO>> getListarTudoPorDiaEId(@PathVariable Long id) {
+        List<TreinoResponseDTO> treinos = TreinoMapper.toListRespostaDTO(treinoService.findByDataTreinoAndUsuarioId(id));
         return !treinos.isEmpty() ? ResponseEntity.status(200).body(treinos) : ResponseEntity.status(204).build();
     }
 
