@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public interface HistoricoPesoRepository extends JpaRepository<HistoricoPeso, Long> {
 
     @Query(value = "SELECT CASE WHEN COUNT(h) > 0 THEN true ELSE false END FROM HistoricoPeso h WHERE h.dataPostagem = :date AND h.usuario.id = :id")
-    boolean existsByDataPostagemAndId(Date date, Long id);
+    boolean existsByDataPostagemAndId(LocalDate date, Long id);
 
     List<HistoricoPeso> findAllByUsuario_Id(Long id);
 
