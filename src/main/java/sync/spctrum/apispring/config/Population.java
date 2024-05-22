@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Configuration
-@Profile("test")
+@Profile({"test", "dev"})
 public class Population implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
