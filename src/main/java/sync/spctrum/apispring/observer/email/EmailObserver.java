@@ -38,5 +38,6 @@ public class EmailObserver implements Observer {
         usuarioRepository.save(usuario);
 
         emailService.enviarEmailRedefinicaoSenha(email, senhaCriptografada);
+
     }
 }

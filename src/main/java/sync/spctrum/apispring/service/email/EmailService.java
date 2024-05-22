@@ -55,22 +55,21 @@ public class EmailService {
                             "Obrigado! <br/>" +
                             "Equipe de Suporte", true
             );
-//            Thread.sleep(60000);
-//            removerPrimeiraSolicitacaoSenha();
-        } catch (MessagingException e) {
+            removerPrimeiraSolicitacaoSenha();
+        } catch (MessagingException | InterruptedException e) {
             e.printStackTrace();
         }
-//        catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
         javaMailSender.send(message);
     }
 
-    @Scheduled(fixedDelay = 60000)
-    public void removerPrimeiraSolicitacaoSenha(){
+    public void removerPrimeiraSolicitacaoSenha() throws InterruptedException {
         if (!resetQueue.isEmpty()){
-            resetQueue.removeFirst();
+            try {
+                Thread.sleep(60000);
+                resetQueue.removeFirst();
+            } catch (InterruptedException interruptedException){
+                interruptedException.printStackTrace();
+            }
         }
     }
 
@@ -80,11 +79,10 @@ public class EmailService {
                     .orElseThrow(() -> new ResponseStatusException(404, "Email ainda não cadastrado", null));
 
             resetQueue.add(usuario);
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Tamanho da lista: " + resetQueue.size());
             return true;
 
         }
-        throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 2 minutos e tente novamente.", null);
+        throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 1 minuto e tente novamente.", null);
     }
 
     public String gerarNovaSenha(){
