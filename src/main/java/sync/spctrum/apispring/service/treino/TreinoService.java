@@ -7,7 +7,9 @@ import sync.spctrum.apispring.exception.ResourceNotFound;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoCountDTO;
 import sync.spctrum.apispring.service.usuario.UsuarioService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -39,22 +41,44 @@ public class TreinoService {
         return treino.isPresent();
     }
 
-    public List<TreinoCountDTO> getTreinosPorDiaDaSemana(Long usuarioId) {
-        List<TreinoCountDTO> treinoCounts = treinoRepository.countTreinosByDiaDaSemana(usuarioId);
 
-        Map<String, Long> countsMap = new HashMap<>();
-        for (TreinoCountDTO count : treinoCounts) {
-            countsMap.put(count.getDiaDaSemana(), count.getQuantidadeTreinos());
+    private static final Map<DayOfWeek, String> DAY_OF_WEEK_MAP = new EnumMap<>(DayOfWeek.class);
+
+    static {
+        DAY_OF_WEEK_MAP.put(DayOfWeek.SUNDAY, "dom");
+        DAY_OF_WEEK_MAP.put(DayOfWeek.MONDAY, "seg");
+        DAY_OF_WEEK_MAP.put(DayOfWeek.TUESDAY, "ter");
+        DAY_OF_WEEK_MAP.put(DayOfWeek.WEDNESDAY, "qua");
+        DAY_OF_WEEK_MAP.put(DayOfWeek.THURSDAY, "qui");
+        DAY_OF_WEEK_MAP.put(DayOfWeek.FRIDAY, "sex");
+        DAY_OF_WEEK_MAP.put(DayOfWeek.SATURDAY, "sáb");
+    }
+
+    public List<TreinoCountDTO> getTreinosPorDiaDaSemana(Long id) {
+        List<Object[]> results = treinoRepository.countTreinosByDiaDaSemana(id);
+        Map<DayOfWeek, Long> dayOfWeekCountMap = new EnumMap<>(DayOfWeek.class);
+
+        // Inicializa o mapa com todos os dias da semana definidos para 0
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            dayOfWeekCountMap.put(dayOfWeek, 0L);
         }
 
-        String[] diasDaSemana = {"seg", "ter", "qua", "qui", "sex", "sáb", "dom"};
-        List<TreinoCountDTO> result = new ArrayList<>();
-
-        for (String dia : diasDaSemana) {
-            result.add(new TreinoCountDTO(dia, countsMap.getOrDefault(dia, 0L)));
+        // Atualiza o mapa com os valores reais obtidos da consulta
+        for (Object[] result : results) {
+            LocalDate localDate = (LocalDate) result[0];
+            DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+            Long count = ((Number) result[1]).longValue();
+            dayOfWeekCountMap.put(dayOfWeek, dayOfWeekCountMap.get(dayOfWeek) + count);
         }
 
-        return result;
+        // Converte o mapa em uma lista de TreinoCountDTO
+        List<TreinoCountDTO> treinoCountDTOList = new ArrayList<>();
+        for (Map.Entry<DayOfWeek, Long> entry : dayOfWeekCountMap.entrySet()) {
+            String diaDaSemana = DAY_OF_WEEK_MAP.get(entry.getKey());
+            treinoCountDTOList.add(new TreinoCountDTO(diaDaSemana, entry.getValue()));
+        }
+
+        return treinoCountDTOList;
     }
 
     public Treino existsByDataTreinoAndId(Long id) {
