@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Receita.Receita;
 

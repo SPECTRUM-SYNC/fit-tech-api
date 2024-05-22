@@ -33,9 +33,6 @@ import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.List;
 
 @Service
@@ -66,8 +63,6 @@ public class UsuarioService {
 
 
     private final AuthenticationManager authenticationManager;
-
-    private final Deque<Usuario> resetQueue = new ArrayDeque<>(2);
 
     public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, GerenciadorTokenJwt gerenciadorTokenJwt, AuthenticationManager authenticationManager, EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
@@ -156,35 +151,5 @@ public class UsuarioService {
 
     public Usuario procurarUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound("ID : " + id));
-    }
-
-    @Scheduled(fixedDelay = 120000)
-    public void removerPrimeiraSolicitacaoSenha(){
-        if (!resetQueue.isEmpty()){
-            resetQueue.removeFirst();
-        }
-    }
-
-    public UsuarioTokenDTO solicitarRedefinicaoSenha(String email){
-        if (isPermitidoRedefinicaoSenha(email)){
-            Usuario usuario = usuarioRepository.findByEmail(email)
-                    .orElseThrow(() -> new ResponseStatusException(404, "Email ainda não cadastrado", null));
-
-            resetQueue.addLast(usuario);
-        }
-        throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 2 minutos e tente novamente.", null);
-    }
-
-    private boolean isPermitidoRedefinicaoSenha(String email) {
-        LocalDateTime now = LocalDateTime.now();
-        return resetQueue.stream()
-                .filter(usuario -> usuario.getEmail().equals(email))
-                .filter(usuario -> now.minusMinutes(2).isBefore(usuario.getHoraSenhaAtualizacao()))
-                .count() < 2;
-    }
-    
-    public String gerarNovaSenha(){
-        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%¨&*()_+-={`^}:><.,/?|";
-        return RandomStringUtils.random(10, caracteres);
     }
 }
