@@ -2,6 +2,7 @@ package sync.spctrum.apispring.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
 import sync.spctrum.apispring.domain.HistoricoPeso.Repository.HistoricoPesoRepository;
@@ -15,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Configuration
+@Profile("test")
 public class Population implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
