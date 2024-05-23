@@ -30,7 +30,7 @@ public class EmailService {
 
     private final UsuarioRepository usuarioRepository;
 
-    private final Deque<Usuario> resetQueue = new ArrayDeque<>(2);
+    private final Deque<Usuario> resetQueue = new ArrayDeque<>(3);
 
     public EmailService(PasswordEncoder passwordEncoder, JavaMailSender javaMailSender, UsuarioRepository usuarioRepository, ConversionService conversionService) {
         this.passwordEncoder = passwordEncoder;
@@ -44,6 +44,7 @@ public class EmailService {
 
         try {
             solicitarRedefinicaoSenha(destinatario);
+            removerPrimeiraSolicitacaoSenha();
             helper.setTo(destinatario);
             helper.setSubject("Redefinição de Senha");
             helper.setText(
@@ -55,34 +56,37 @@ public class EmailService {
                             "Obrigado! <br/>" +
                             "Equipe de Suporte", true
             );
-            removerPrimeiraSolicitacaoSenha();
-        } catch (MessagingException | InterruptedException e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         javaMailSender.send(message);
     }
 
     public void removerPrimeiraSolicitacaoSenha() throws InterruptedException {
-        if (!resetQueue.isEmpty()){
-            try {
-                Thread.sleep(60000);
-                resetQueue.removeFirst();
-            } catch (InterruptedException interruptedException){
-                interruptedException.printStackTrace();
-            }
+        if (resetQueue.size() == 2) {
+            System.out.println("Removendo");
+            Thread.sleep(120000);
+            resetQueue.removeFirst();
+            System.out.println("Removeu");
+            System.out.println("Tamanho fila: " + resetQueue.size());
+
         }
     }
 
-    public boolean solicitarRedefinicaoSenha(String email){
-        if (!isPermitidoRedefinicaoSenha(email)){
+
+    public boolean solicitarRedefinicaoSenha(String email) throws InterruptedException {
+        if (!isPermitidoRedefinicaoSenha(email)) {
             Usuario usuario = usuarioRepository.findByEmailEqualsIgnoreCase(email)
                     .orElseThrow(() -> new ResponseStatusException(404, "Email ainda não cadastrado", null));
 
             resetQueue.add(usuario);
+            System.out.println("\n\n\n\n\n\n\n\n\n " + resetQueue.size());
             return true;
-
         }
-        throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 1 minuto e tente novamente.", null);
+        throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 2 minutos e tente novamente.", null);
     }
 
     public String gerarNovaSenha(){
