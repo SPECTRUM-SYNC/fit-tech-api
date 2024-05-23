@@ -4,7 +4,9 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import jakarta.annotation.PostConstruct;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,12 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.stringtemplate.v4.ST;
 import sync.spctrum.apispring.api.configuration.security.jwt.GerenciadorTokenJwt;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceNotFound;
 import sync.spctrum.apispring.exception.TransactionNotAcceptable;
+import sync.spctrum.apispring.service.email.EmailService;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginDTO;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioLoginGoogleDTO;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
@@ -34,6 +38,7 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
+    private final EmailService emailService;
     @Value("${spring.cloud.azure.storage.blob.container-name}")
     private String containerName;
 
@@ -59,11 +64,12 @@ public class UsuarioService {
 
     private final AuthenticationManager authenticationManager;
 
-    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, GerenciadorTokenJwt gerenciadorTokenJwt, AuthenticationManager authenticationManager) {
+    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, GerenciadorTokenJwt gerenciadorTokenJwt, AuthenticationManager authenticationManager, EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
         this.usuarioRepository = usuarioRepository;
         this.gerenciadorTokenJwt = gerenciadorTokenJwt;
         this.authenticationManager = authenticationManager;
+        this.emailService = emailService;
     }
 
     public List<UsuarioResponseDTO> usuariosPontuacao() {

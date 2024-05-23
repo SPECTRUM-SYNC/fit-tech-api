@@ -3,19 +3,23 @@ package sync.spctrum.apispring.controller;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import sync.spctrum.apispring.domain.Usuario.ListObject;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.exception.ResourceDuplicate;
 import sync.spctrum.apispring.exception.ResourceNotFound;
 import sync.spctrum.apispring.exception.TransactionNotAcceptable;
+import sync.spctrum.apispring.observer.email.EmailObserver;
 import sync.spctrum.apispring.service.email.EmailService;
 import sync.spctrum.apispring.service.email.dto.EmailDTO;
 import sync.spctrum.apispring.service.historicoPeso.HistoricoPesoService;
@@ -40,13 +44,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuarios")
 @SecurityRequirement(name = "Bearer")
+@EnableScheduling
 public class UsuarioController {
     private EmailService emailService;
+
     private UsuarioService usuarioService;
     private UsuarioRepository usuarioRepository;
-
     private final HistoricoPesoService pesoService;
     private final PasswordEncoder passwordEncoder;
+    private EmailObserver emailObserver;
 
     private ListObject<Usuario> listaTopUsuarios;
 
@@ -58,7 +64,7 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         listaTopUsuarios = new ListObject<>(5);
-
+        this.emailObserver = new EmailObserver(usuarioRepository, passwordEncoder, emailService);
     }
 
     @ApiResponse(responseCode = "200", description = "Mostrando todos os usuários cadastrados no sistema.")
@@ -219,22 +225,14 @@ public class UsuarioController {
     }
 
     @PostMapping("/enviar-email")
-    public ResponseEntity<String> enviarEmail(@RequestBody EmailDTO emailDTO) {
-        String destinatario = emailDTO.getPara();
-        String nome = emailDTO.getNome();
-
-        if (validEmailExistente(destinatario)) {
-            try {
-                emailService.enviarEmail(destinatario, nome);
-                return ResponseEntity.ok().body("E-mail enviado com sucesso!");
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                        .body("Erro ao enviar e-mail: " + e.getMessage());
-            }
-        } else {
-            throw new ResourceNotFound("Email não encontrado");
+    public ResponseEntity<String> enviarEmail(@RequestBody @Valid EmailDTO email) {
+        if (validEmailExistente(email.getPara())) {
+            if(email != null ) { emailObserver.atualizar(email.getPara()); }
+            return ResponseEntity.ok().body("Solicitação de redefinição de senha enviada com sucesso! Verifique seu email.");
         }
+        throw new ResourceNotFound("Email não encontrado");
     }
+
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadCSV() {
