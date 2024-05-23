@@ -2,6 +2,7 @@ package sync.spctrum.apispring.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
 import sync.spctrum.apispring.domain.HistoricoPeso.Repository.HistoricoPesoRepository;
@@ -10,12 +11,12 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 @Configuration
+@Profile({"test", "dev"})
 public class Population implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
@@ -43,10 +44,9 @@ public class Population implements CommandLineRunner {
         m1.setNome("Winycios");
         m1.setEmail("winycios@gmail.com");
         m1.setSenha(passwordEncoder.encode("Madalena13#"));
-        m1.setMeta("Perder peso");
+        m1.setMeta("PerderPeso");
         m1.setDataNascimento(dataUser);
         m1.setGenero("Homem");
-        //m1.setImg("https://fittech500.blob.core.windows.net/blob/Winycios_1");
         m1.setPeso(65.0);
         m1.setAltura(175);
         m1.setNivelCondicao("Basico");
@@ -61,11 +61,10 @@ public class Population implements CommandLineRunner {
         m2.setNome("Ana");
         m2.setEmail("ana@gmail.com");
         m2.setSenha(passwordEncoder.encode("Madalena15#"));
-        m2.setMeta("Perder peso");
+        m2.setMeta("PerderPeso");
         m2.setDataNascimento(dataUser2);
         m2.setGenero("Mulher");
         m2.setPeso(70.8);
-        //m2.setImg("https://fittech500.blob.core.windows.net/blob/ana.jpg");
         m2.setAltura(160);
         m2.setNivelCondicao("Basico");
         m2.setContaAtiva(false);
@@ -79,11 +78,10 @@ public class Population implements CommandLineRunner {
         m3.setNome("Gustavo");
         m3.setEmail("gustavo@gmail.com");
         m3.setSenha(passwordEncoder.encode("Madalena1#"));
-        m3.setMeta("Ganhar massa muscular");
+        m3.setMeta("GanharMassa");
         m3.setDataNascimento(dataUser3);
         m3.setGenero("Homem");
         m3.setPeso(100.0);
-        //m3.setImg("https://fittech500.blob.core.windows.net/blob/dr.jpg");
         m3.setAltura(180);
         m3.setNivelCondicao("Basico");
         m3.setContaAtiva(true);
@@ -92,21 +90,14 @@ public class Population implements CommandLineRunner {
 
         usuarioRepository.saveAll(Arrays.asList(m1, m2, m3));
 
-        calendario.set(2021, Calendar.JUNE, 17);
-        Date data = calendario.getTime();
-        HistoricoPeso hp1 = new HistoricoPeso(null, data, 50.0, 60.0, m1);
 
-        calendario.set(2021, Calendar.JUNE, 18);
-        Date data2 = calendario.getTime();
-        HistoricoPeso hp2 = new HistoricoPeso(null, data2, 60.0, 60.0, m1);
+        HistoricoPeso hp1 = new HistoricoPeso(null, LocalDate.of(2021, Calendar.JUNE, 17), 50.0, 60.0, m1);
 
-        calendario.set(2021, Calendar.JUNE, 22);
-        Date data3 = calendario.getTime();
-        HistoricoPeso hp3 = new HistoricoPeso(null, data3, 62.0, 70.0, m1);
+        HistoricoPeso hp2 = new HistoricoPeso(null, LocalDate.of(2021, Calendar.JUNE, 18), 60.0, 60.0, m1);
 
-        calendario.set(2021, Calendar.JUNE, 27);
-        Date data4 = calendario.getTime();
-        HistoricoPeso hp4 = new HistoricoPeso(null, data4, 62.0, 70.0, m1);
+        HistoricoPeso hp3 = new HistoricoPeso(null, LocalDate.of(2021, Calendar.JUNE, 22), 62.0, 70.0, m1);
+
+        HistoricoPeso hp4 = new HistoricoPeso(null, LocalDate.of(2021, Calendar.JUNE, 27), 62.0, 70.0, m1);
 
         historicoPesoRepository.saveAll(Arrays.asList(hp1, hp2, hp3, hp4));
     }

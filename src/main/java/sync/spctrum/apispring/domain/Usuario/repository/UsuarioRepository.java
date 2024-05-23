@@ -12,7 +12,7 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmail(String email);
 
-    @Query(value = "SELECT * FROM Usuario order by pontuacao DESC limit 3", nativeQuery = true)
+    @Query(value = "SELECT u FROM Usuario u order by u.pontuacao DESC limit 3")
     List<Usuario> topUsuarios();
 
     Optional<Usuario> findByEmailEqualsIgnoreCase(String email);
