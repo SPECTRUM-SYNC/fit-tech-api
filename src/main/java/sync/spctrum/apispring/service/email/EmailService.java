@@ -66,7 +66,7 @@ public class EmailService {
     }
 
     public void removerPrimeiraSolicitacaoSenha() throws InterruptedException {
-        if (resetQueue.size() == 2) {
+        if (resetQueue.size() == 3) {
             System.out.println("Removendo");
             Thread.sleep(120000);
             resetQueue.removeFirst();
@@ -75,7 +75,6 @@ public class EmailService {
 
         }
     }
-
 
     public boolean solicitarRedefinicaoSenha(String email) throws InterruptedException {
         if (!isPermitidoRedefinicaoSenha(email)) {
@@ -94,5 +93,5 @@ public class EmailService {
         return RandomStringUtils.random(10, caracteres);
     }
 
-    private boolean isPermitidoRedefinicaoSenha(String email) {return resetQueue.size() == 2;}
+    private boolean isPermitidoRedefinicaoSenha(String email) {return resetQueue.size() == 3;}
 }
