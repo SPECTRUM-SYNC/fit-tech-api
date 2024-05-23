@@ -30,7 +30,7 @@ public class EmailService {
 
     private final UsuarioRepository usuarioRepository;
 
-    private final Deque<Usuario> resetQueue = new ArrayDeque<>(3);
+    FilaObj resetQueue = new FilaObj(3);
 
     public EmailService(PasswordEncoder passwordEncoder, JavaMailSender javaMailSender, UsuarioRepository usuarioRepository, ConversionService conversionService) {
         this.passwordEncoder = passwordEncoder;
@@ -44,7 +44,6 @@ public class EmailService {
 
         try {
             solicitarRedefinicaoSenha(destinatario);
-            removerPrimeiraSolicitacaoSenha();
             helper.setTo(destinatario);
             helper.setSubject("Redefinição de Senha");
             helper.setText(
@@ -66,13 +65,8 @@ public class EmailService {
     }
 
     public void removerPrimeiraSolicitacaoSenha() throws InterruptedException {
-        if (resetQueue.size() == 3) {
-            System.out.println("Removendo");
-            Thread.sleep(120000);
-            resetQueue.removeFirst();
-            System.out.println("Removeu");
-            System.out.println("Tamanho fila: " + resetQueue.size());
-
+        if (resetQueue.getTamanho() >= 2) {
+            resetQueue.poll();
         }
     }
 
@@ -81,10 +75,10 @@ public class EmailService {
             Usuario usuario = usuarioRepository.findByEmailEqualsIgnoreCase(email)
                     .orElseThrow(() -> new ResponseStatusException(404, "Email ainda não cadastrado", null));
 
-            resetQueue.add(usuario);
-            System.out.println("\n\n\n\n\n\n\n\n\n " + resetQueue.size());
+            resetQueue.insert(usuario);
             return true;
         }
+        removerPrimeiraSolicitacaoSenha();
         throw new ResponseStatusException(429, "Limite de solicitações excedido. Aguarde 2 minutos e tente novamente.", null);
     }
 
@@ -93,5 +87,5 @@ public class EmailService {
         return RandomStringUtils.random(10, caracteres);
     }
 
-    private boolean isPermitidoRedefinicaoSenha(String email) {return resetQueue.size() == 3;}
+    private boolean isPermitidoRedefinicaoSenha(String email) {return resetQueue.getTamanho() == 2;}
 }
