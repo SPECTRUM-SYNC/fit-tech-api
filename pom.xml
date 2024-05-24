@@ -15,7 +15,7 @@
     <name>API-Spring</name>
     <description>API-Spring</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>17.0.11</java.version>
     </properties>
     <repositories>
         <repository>
