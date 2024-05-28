@@ -27,6 +27,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.convert.ApplicationConversionService;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -68,7 +69,7 @@ class UsuarioServiceTest {
     @MockBean
     private UsuarioRepository usuarioRepository;
 
-    @Autowired
+    @MockBean
     private UsuarioService usuarioService;
 
     /**

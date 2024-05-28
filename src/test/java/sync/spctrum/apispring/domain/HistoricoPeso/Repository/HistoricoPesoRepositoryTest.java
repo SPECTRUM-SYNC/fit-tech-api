@@ -8,7 +8,10 @@ import java.util.Date;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
@@ -17,8 +20,11 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 @ContextConfiguration(classes = {HistoricoPesoRepository.class})
 @ExtendWith(SpringExtension.class)
+@SpringBootTest
+@ActiveProfiles("test")
 class HistoricoPesoRepositoryTest {
-    @Autowired
+
+    @Mock
     private HistoricoPesoRepository historicoPesoRepository;
 
     /**
