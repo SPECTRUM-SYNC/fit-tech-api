@@ -8,7 +8,10 @@ import java.util.Date;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
@@ -17,8 +20,11 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 @ContextConfiguration(classes = {HistoricoPesoRepository.class})
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles("test")
+@SpringBootTest
 class HistoricoPesoRepositoryDiffblueTest {
-    @Autowired
+
+    @Mock
     private HistoricoPesoRepository historicoPesoRepository;
 
     /**
@@ -26,7 +32,6 @@ class HistoricoPesoRepositoryDiffblueTest {
      * {@link HistoricoPesoRepository#existsByDataPostagemAndId(LocalDate, Long)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testExistsByDataPostagemAndId() {
         // TODO: Diffblue Cover was only able to create a partial test for this method:
         //   Reason: Failed to create Spring context.

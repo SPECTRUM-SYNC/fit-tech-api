@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,17 +17,13 @@ import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
 @SpringBootTest
+@ActiveProfiles("test")
 class UsuarioRepositoryTest {
 
-    @Autowired
+    @Mock
     private UsuarioRepository usuarioRepository;
 
-    @Test
-    void test() {
-        System.out.println(usuarioRepository.findAll());
-    }
 
     /**
      * Method under test: {@link UsuarioRepository#findByEmail(String)}
