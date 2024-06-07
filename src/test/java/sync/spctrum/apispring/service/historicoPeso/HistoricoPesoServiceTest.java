@@ -84,7 +84,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -108,7 +107,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -132,7 +130,6 @@ class HistoricoPesoServiceTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
         when(usuarioService.procurarUsuarioPorId(Mockito.<Long>any())).thenReturn(usuario3);
 
@@ -188,7 +185,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -213,7 +209,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -243,7 +238,6 @@ class HistoricoPesoServiceTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -268,7 +262,6 @@ class HistoricoPesoServiceTest {
         usuario4.setObjetivo(objetivo3);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -293,7 +286,6 @@ class HistoricoPesoServiceTest {
         usuario5.setObjetivo(objetivo4);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         when(usuarioService.procurarUsuarioPorId(Mockito.<Long>any())).thenReturn(usuario5);
 
@@ -314,7 +306,6 @@ class HistoricoPesoServiceTest {
         usuario6.setObjetivo(new Objetivo());
         usuario6.setPeso(10.0d);
         usuario6.setPontuacao(1);
-        usuario6.setReceitas(new ArrayList<>());
         usuario6.setSenha("Senha");
 
         Objetivo objetivo5 = new Objetivo();
@@ -339,7 +330,6 @@ class HistoricoPesoServiceTest {
         usuario7.setObjetivo(objetivo5);
         usuario7.setPeso(10.0d);
         usuario7.setPontuacao(1);
-        usuario7.setReceitas(new ArrayList<>());
         usuario7.setSenha("Senha");
 
         Objetivo objetivo6 = new Objetivo();
@@ -364,7 +354,6 @@ class HistoricoPesoServiceTest {
         usuario8.setObjetivo(objetivo6);
         usuario8.setPeso(10.0d);
         usuario8.setPontuacao(1);
-        usuario8.setReceitas(new ArrayList<>());
         usuario8.setSenha("Senha");
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenReturn(usuario8);
 
@@ -428,7 +417,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -452,7 +440,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -481,7 +468,6 @@ class HistoricoPesoServiceTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -505,7 +491,6 @@ class HistoricoPesoServiceTest {
         usuario4.setObjetivo(objetivo3);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -529,7 +514,6 @@ class HistoricoPesoServiceTest {
         usuario5.setObjetivo(objetivo4);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         when(usuarioService.procurarUsuarioPorId(Mockito.<Long>any())).thenReturn(usuario5);
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenThrow(new ResourceDuplicate("Obj"));
@@ -582,7 +566,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -607,7 +590,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -674,7 +656,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -699,7 +680,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -726,7 +706,6 @@ class HistoricoPesoServiceTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(0);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo2 = new Objetivo();
@@ -751,7 +730,6 @@ class HistoricoPesoServiceTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(0);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();
@@ -870,7 +848,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -895,7 +872,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -962,7 +938,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -987,7 +962,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -1014,7 +988,6 @@ class HistoricoPesoServiceTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(0);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1039,7 +1012,6 @@ class HistoricoPesoServiceTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(0);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();
@@ -1142,7 +1114,6 @@ class HistoricoPesoServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -1167,7 +1138,6 @@ class HistoricoPesoServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();

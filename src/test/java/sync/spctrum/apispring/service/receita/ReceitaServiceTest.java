@@ -107,7 +107,6 @@ class ReceitaServiceTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -131,7 +130,6 @@ class ReceitaServiceTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario2);
         when(usuarioRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);

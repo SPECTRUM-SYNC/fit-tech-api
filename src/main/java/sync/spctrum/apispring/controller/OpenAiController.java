@@ -1,40 +1,72 @@
 package sync.spctrum.apispring.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import sync.spctrum.apispring.domain.Receita.Receita;
 import sync.spctrum.apispring.domain.Receita.repository.ReceitaRepository;
 import sync.spctrum.apispring.service.receita.ReceitaService;
+import sync.spctrum.apispring.service.receita.dto.modelMapper.ReceitaMapper;
+import sync.spctrum.apispring.service.receita.dto.receita.ReceitaResponseDTO;
 
-import org.springframework.ai.openai.OpenAiChatClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDate;
 import java.util.List;
+
 @RestController
 @RequestMapping("/openai")
 @SecurityRequirement(name = "Bearer")
 public class OpenAiController {
-    @Autowired
-    ReceitaRepository ReceitaRepository;
+
+    private final ReceitaRepository receitaRepository;
+    private final ReceitaService receitaService;
+    private final OpenAiChatClient openai;
 
     @Autowired
-    ReceitaService receitaService;
-    
-    @Autowired
-    OpenAiChatClient openai;
+    public OpenAiController(ReceitaRepository receitaRepository, ReceitaService receitaService, OpenAiChatClient openai) {
+        this.receitaRepository = receitaRepository;
+        this.receitaService = receitaService;
+        this.openai = openai;
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<List<ReceitaResponseDTO>> getReceitasIdUsuario(@PathVariable Long id) {
+        List<ReceitaResponseDTO> receitas = ReceitaMapper.toListRespostaDTO(receitaService.findByReceitasWhereUsuarioId(id));
+
+        if (receitas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(receitas);
+    }
+
 
     @GetMapping("/gpt3/{id}")
-    public List<Receita> gpt3(@RequestParam String objetivo, @PathVariable Long id) {
-        String resposta = openai.call("Gere um JSON com os seguintes campos Nome, Ingredientes, Modo de preparo, Calorias, Tempo de preparo, Tipo, Proteina, Calorias, Carboidratos, Gorduras, Acucar. O JSON deve ser com o [] e ' , ' para separar, o campo Ingredientes seja representado como um array com os ingredientes listados individualmente.  Meu objetivo é " + objetivo + " . Gere somente o texto e sem nenhum texto explicativo, gere 5 receitas diferentes.");
+    public List<Receita> gpt3(@RequestParam String objetivo, @RequestParam Integer qtdSelecionada, @PathVariable Long id) {
+        String prompt = "Gere um JSON com os seguintes campos Nome, Ingredientes, Modo de preparo, Calorias, Tempo de preparo, Tipo, Proteina, Calorias, Carboidratos, Gorduras, Acucar. " +
+                "O JSON deve ser com o [] e ' , ' para separar, o campo Ingredientes seja representado como um array com os ingredientes listados individualmente. " +
+                "Meu objetivo é " + objetivo + " . Gere somente o texto e sem nenhum texto explicativo, gere 5 receitas diferentes.";
 
-        List<Receita> receitas = receitaService.desserializarListaReceitas(resposta, id);
+        String resposta;
+        try {
+            resposta = openai.call(prompt);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao chamar a API OpenAI", e);
+        }
 
-        ReceitaRepository.saveAll(receitas);
-        
+        List<Receita> receitas;
+        try {
+            receitas = receitaService.desserializarListaReceitas(resposta, id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao desserializar a resposta da API OpenAI", e);
+        }
+        receitas.forEach(r -> {
+            r.setDataCriacao(LocalDate.now());
+            r.setQtdSelecionada(qtdSelecionada);
+        });
+
+        receitaRepository.saveAll(receitas);
+
         return receitas;
     }
 }

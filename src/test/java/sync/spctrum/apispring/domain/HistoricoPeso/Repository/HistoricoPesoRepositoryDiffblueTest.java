@@ -105,7 +105,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -129,7 +128,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -159,7 +157,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(-1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -183,7 +180,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();
@@ -235,7 +231,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -259,7 +254,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -289,7 +283,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(-1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -313,7 +306,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();
@@ -365,7 +357,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -389,7 +380,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -419,7 +409,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(-1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -443,7 +432,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();
@@ -495,7 +483,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -519,7 +506,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -549,7 +535,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(-1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -573,7 +558,6 @@ class HistoricoPesoRepositoryDiffblueTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();

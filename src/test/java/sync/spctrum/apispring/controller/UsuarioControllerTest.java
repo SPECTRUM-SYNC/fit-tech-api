@@ -116,7 +116,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -140,7 +139,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -164,7 +162,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
         String content = (new ObjectMapper()).writeValueAsString(usuario3);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/usuarios/adicionar-top-ranking")
@@ -263,21 +260,18 @@ class UsuarioControllerTest {
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
         ArrayList<Receita> receitas = new ArrayList<>();
-        usuario3.setReceitas(receitas);
         usuario3.setSenha("Senha");
         objetivo2.setUsuario(usuario3);
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
         ArrayList<Receita> receitas2 = new ArrayList<>();
-        usuario2.setReceitas(receitas2);
         usuario2.setSenha("Senha");
         objetivo.setUsuario(usuario2);
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
         ArrayList<Receita> receitas3 = new ArrayList<>();
-        usuario.setReceitas(receitas3);
         usuario.setSenha("Senha");
         Object[] uriVariables = new Object[]{usuario};
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/usuarios/buscar/{elemento}",
@@ -319,7 +313,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -343,7 +336,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario2);
         doNothing().when(usuarioRepository).delete(Mockito.<Usuario>any());
@@ -403,7 +395,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("NOME");
 
         Objetivo objetivo2 = new Objetivo();
@@ -427,7 +418,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("NOME");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -473,7 +463,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("NOME");
 
         Objetivo objetivo2 = new Objetivo();
@@ -497,7 +486,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("NOME");
 
         Objetivo objetivo3 = new Objetivo();
@@ -521,7 +509,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(10);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("PESO");
 
         Objetivo objetivo4 = new Objetivo();
@@ -545,7 +532,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(10);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("PESO");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -644,7 +630,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(8);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Email não encontrado");
 
         Objetivo objetivo2 = new Objetivo();
@@ -668,7 +653,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(8);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Email não encontrado");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -695,7 +679,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -719,7 +702,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario4);
 
@@ -739,7 +721,6 @@ class UsuarioControllerTest {
         usuario5.setObjetivo(new Objetivo());
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
 
         Objetivo objetivo5 = new Objetivo();
@@ -763,7 +744,6 @@ class UsuarioControllerTest {
         usuario6.setObjetivo(objetivo5);
         usuario6.setPeso(10.0d);
         usuario6.setPontuacao(1);
-        usuario6.setReceitas(new ArrayList<>());
         usuario6.setSenha("Senha");
 
         Objetivo objetivo6 = new Objetivo();
@@ -787,7 +767,6 @@ class UsuarioControllerTest {
         usuario7.setObjetivo(objetivo6);
         usuario7.setPeso(10.0d);
         usuario7.setPontuacao(1);
-        usuario7.setReceitas(new ArrayList<>());
         usuario7.setSenha("Senha");
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenReturn(usuario7);
         when(usuarioRepository.findByEmailEqualsIgnoreCase(Mockito.<String>any())).thenReturn(ofResult);
@@ -870,7 +849,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -894,7 +872,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -943,7 +920,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -967,7 +943,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -991,7 +966,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(-1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -1015,7 +989,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -1069,7 +1042,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Nenhum usuário encontrado");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1093,7 +1065,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Nenhum usuário encontrado");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -1143,7 +1114,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Nenhum usuário encontrado");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1167,7 +1137,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Nenhum usuário encontrado");
 
         Objetivo objetivo3 = new Objetivo();
@@ -1191,7 +1160,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -1215,7 +1183,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -1270,7 +1237,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Nehuma conta %s encontrada");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1294,7 +1260,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Nehuma conta %s encontrada");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -1345,7 +1310,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Nehuma conta %s encontrada");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1369,7 +1333,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Nehuma conta %s encontrada");
 
         Objetivo objetivo3 = new Objetivo();
@@ -1393,7 +1356,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(200);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -1417,7 +1379,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(200);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -1487,7 +1448,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1511,7 +1471,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario2);
         when(usuarioRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -1557,7 +1516,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1581,7 +1539,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario2);
 
@@ -1601,7 +1558,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -1625,7 +1581,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo3);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -1649,7 +1604,6 @@ class UsuarioControllerTest {
         usuario5.setObjetivo(objetivo4);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenReturn(usuario5);
         when(usuarioRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -1695,7 +1649,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -1719,7 +1672,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario2);
 
@@ -1739,7 +1691,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -1763,7 +1714,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo3);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -1787,7 +1737,6 @@ class UsuarioControllerTest {
         usuario5.setObjetivo(objetivo4);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenReturn(usuario5);
         when(usuarioRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -1997,7 +1946,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -2021,7 +1969,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Optional<Usuario> ofResult = Optional.of(usuario2);
 
@@ -2041,7 +1988,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -2065,7 +2011,6 @@ class UsuarioControllerTest {
         usuario4.setObjetivo(objetivo3);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -2089,7 +2034,6 @@ class UsuarioControllerTest {
         usuario5.setObjetivo(objetivo4);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenReturn(usuario5);
         when(usuarioRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -2182,7 +2126,6 @@ class UsuarioControllerTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -2206,7 +2149,6 @@ class UsuarioControllerTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -2230,7 +2172,6 @@ class UsuarioControllerTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
         String content = (new ObjectMapper()).writeValueAsString(usuario3);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/usuarios/remover")

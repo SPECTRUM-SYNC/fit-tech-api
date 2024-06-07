@@ -166,7 +166,6 @@ class UsuarioServiceTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -190,7 +189,6 @@ class UsuarioServiceTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -248,7 +246,6 @@ class UsuarioServiceTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -272,7 +269,6 @@ class UsuarioServiceTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -296,7 +292,6 @@ class UsuarioServiceTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(0);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -320,7 +315,6 @@ class UsuarioServiceTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(0);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         ArrayList<Usuario> usuarioList = new ArrayList<>();
@@ -437,7 +431,6 @@ class UsuarioServiceTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -462,7 +455,6 @@ class UsuarioServiceTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -487,7 +479,6 @@ class UsuarioServiceTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
         UsuarioRepository usuarioRepository = mock(UsuarioRepository.class);
         when(usuarioRepository.save(Mockito.<Usuario>any())).thenReturn(usuario3);

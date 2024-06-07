@@ -120,7 +120,6 @@ class ObjetivoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -144,7 +143,6 @@ class ObjetivoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -182,7 +180,6 @@ class ObjetivoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -206,7 +203,6 @@ class ObjetivoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         Objetivo objetivo2 = mock(Objetivo.class);
         when(objetivo2.getId()).thenReturn(1L);
@@ -265,7 +261,6 @@ class ObjetivoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -289,7 +284,6 @@ class ObjetivoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -332,7 +326,6 @@ class ObjetivoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -356,7 +349,6 @@ class ObjetivoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -380,7 +372,6 @@ class ObjetivoMapperTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(0);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo3 = new Objetivo();
@@ -404,7 +395,6 @@ class ObjetivoMapperTest {
         usuario4.setObjetivo(objetivo3);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(0);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();

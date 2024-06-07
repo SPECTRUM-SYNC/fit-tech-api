@@ -219,7 +219,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -244,7 +243,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         // Act
@@ -297,7 +295,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -327,7 +324,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo3);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -352,7 +348,6 @@ class UsuarioMapperTest {
         usuario3.setObjetivo(objetivo4);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo5 = new Objetivo();
@@ -389,7 +384,6 @@ class UsuarioMapperTest {
         doNothing().when(usuario4).setObjetivo(Mockito.<Objetivo>any());
         doNothing().when(usuario4).setPeso(Mockito.<Double>any());
         doNothing().when(usuario4).setPontuacao(anyInt());
-        doNothing().when(usuario4).setReceitas(Mockito.<List<Receita>>any());
         doNothing().when(usuario4).setSenha(Mockito.<String>any());
         usuario4.preUpdate();
         usuario4.setAltura(1);
@@ -407,7 +401,6 @@ class UsuarioMapperTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         // Act
@@ -442,7 +435,6 @@ class UsuarioMapperTest {
         verify(usuario4).setObjetivo(isA(Objetivo.class));
         verify(usuario4).setPeso(eq(10.0d));
         verify(usuario4).setPontuacao(eq(1));
-        verify(usuario4).setReceitas(isA(List.class));
         verify(usuario4).setSenha(eq("Senha"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         assertEquals("1969-12-31", simpleDateFormat.format(actualToRespostaDTOResult.getDataNascimento()));
@@ -490,7 +482,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -520,7 +511,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo3);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -545,7 +535,6 @@ class UsuarioMapperTest {
         usuario3.setObjetivo(objetivo4);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo5 = new Objetivo();
@@ -581,7 +570,6 @@ class UsuarioMapperTest {
         doNothing().when(usuario4).setObjetivo(Mockito.<Objetivo>any());
         doNothing().when(usuario4).setPeso(Mockito.<Double>any());
         doNothing().when(usuario4).setPontuacao(anyInt());
-        doNothing().when(usuario4).setReceitas(Mockito.<List<Receita>>any());
         doNothing().when(usuario4).setSenha(Mockito.<String>any());
         usuario4.preUpdate();
         usuario4.setAltura(1);
@@ -599,7 +587,6 @@ class UsuarioMapperTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         // Act
@@ -634,7 +621,6 @@ class UsuarioMapperTest {
         verify(usuario4).setObjetivo(isA(Objetivo.class));
         verify(usuario4).setPeso(eq(10.0d));
         verify(usuario4).setPontuacao(eq(1));
-        verify(usuario4).setReceitas(isA(List.class));
         verify(usuario4).setSenha(eq("Senha"));
         assertEquals("Genero", actualToRespostaDTOResult.getGenero());
         assertEquals("Img", actualToRespostaDTOResult.getImg());
@@ -693,7 +679,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -718,7 +703,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -759,7 +743,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -784,7 +767,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -809,7 +791,6 @@ class UsuarioMapperTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(0);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -834,7 +815,6 @@ class UsuarioMapperTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(0);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -876,7 +856,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -901,7 +880,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         // Act
@@ -942,7 +920,6 @@ class UsuarioMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -968,7 +945,6 @@ class UsuarioMapperTest {
         doNothing().when(usuario2).setObjetivo(Mockito.<Objetivo>any());
         doNothing().when(usuario2).setPeso(Mockito.<Double>any());
         doNothing().when(usuario2).setPontuacao(anyInt());
-        doNothing().when(usuario2).setReceitas(Mockito.<List<Receita>>any());
         doNothing().when(usuario2).setSenha(Mockito.<String>any());
         usuario2.preUpdate();
         usuario2.setAltura(1);
@@ -986,7 +962,6 @@ class UsuarioMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         // Act
@@ -1011,7 +986,6 @@ class UsuarioMapperTest {
         verify(usuario2).setObjetivo(isA(Objetivo.class));
         verify(usuario2).setPeso(eq(10.0d));
         verify(usuario2).setPontuacao(eq(1));
-        verify(usuario2).setReceitas(isA(List.class));
         verify(usuario2).setSenha(eq("Senha"));
         assertEquals("ABC123", actualToTokenResult.getToken());
         assertEquals("Nome", actualToTokenResult.getNome());
