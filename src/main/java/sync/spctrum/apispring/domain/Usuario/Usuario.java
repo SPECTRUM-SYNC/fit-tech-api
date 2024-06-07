@@ -38,9 +38,6 @@ public class Usuario implements Serializable {
     private int pontuacao;
     private LocalDateTime horaSenhaAtualizacao;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Receita> receitas;
-
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private Objetivo objetivo;

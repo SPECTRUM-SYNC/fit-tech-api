@@ -3,12 +3,9 @@ package sync.spctrum.apispring.service.treino.dto.modelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
 import sync.spctrum.apispring.domain.Treino.Treino;
-import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoCreateDTO;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoResponseDTO;
-import sync.spctrum.apispring.service.usuario.dto.modelMapper.UsuarioMapper;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
+
 
 import java.util.List;
 

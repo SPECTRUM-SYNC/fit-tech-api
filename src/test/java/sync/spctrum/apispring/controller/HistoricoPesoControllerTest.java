@@ -95,7 +95,6 @@ class HistoricoPesoControllerTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -120,7 +119,6 @@ class HistoricoPesoControllerTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -169,7 +167,6 @@ class HistoricoPesoControllerTest {
         usuario4.setObjetivo(new Objetivo());
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -194,7 +191,6 @@ class HistoricoPesoControllerTest {
         usuario5.setObjetivo(objetivo3);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
 
         Objetivo objetivo4 = new Objetivo();
@@ -219,7 +215,6 @@ class HistoricoPesoControllerTest {
         usuario6.setObjetivo(objetivo4);
         usuario6.setPeso(10.0d);
         usuario6.setPontuacao(1);
-        usuario6.setReceitas(new ArrayList<>());
         usuario6.setSenha("Senha");
         UsuarioRepository usuarioRepository3 = mock(UsuarioRepository.class);
         when(usuarioRepository3.save(Mockito.<Usuario>any())).thenReturn(usuario6);

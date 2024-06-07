@@ -60,7 +60,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -84,7 +83,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         // Act
@@ -130,7 +128,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -154,7 +151,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         // Act
@@ -205,7 +201,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -230,7 +225,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -295,7 +289,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -320,7 +313,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso historicoPeso = new HistoricoPeso();
@@ -347,7 +339,6 @@ class HistoricoPesoMapperTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(0.5d);
         usuario3.setPontuacao(0);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("42");
 
         Objetivo objetivo2 = new Objetivo();
@@ -372,7 +363,6 @@ class HistoricoPesoMapperTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(0);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         HistoricoPeso historicoPeso2 = new HistoricoPeso();
@@ -460,7 +450,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -485,7 +474,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         HistoricoPeso peso = new HistoricoPeso();
@@ -545,7 +533,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -570,7 +557,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Usuario usuario3 = new Usuario();
@@ -590,7 +576,6 @@ class HistoricoPesoMapperTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -615,7 +600,6 @@ class HistoricoPesoMapperTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -640,7 +624,6 @@ class HistoricoPesoMapperTest {
         usuario5.setObjetivo(objetivo3);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         HistoricoPeso peso = mock(HistoricoPeso.class);
         when(peso.getPeso()).thenReturn(10.0d);
@@ -719,7 +702,6 @@ class HistoricoPesoMapperTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -744,7 +726,6 @@ class HistoricoPesoMapperTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Usuario usuario3 = new Usuario();
@@ -764,7 +745,6 @@ class HistoricoPesoMapperTest {
         usuario3.setObjetivo(new Objetivo());
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -789,7 +769,6 @@ class HistoricoPesoMapperTest {
         usuario4.setObjetivo(objetivo2);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
 
         Objetivo objetivo3 = new Objetivo();
@@ -814,7 +793,6 @@ class HistoricoPesoMapperTest {
         usuario5.setObjetivo(objetivo3);
         usuario5.setPeso(10.0d);
         usuario5.setPontuacao(1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("Senha");
         HistoricoPeso peso = mock(HistoricoPeso.class);
         when(peso.getPeso()).thenReturn(10.0d);

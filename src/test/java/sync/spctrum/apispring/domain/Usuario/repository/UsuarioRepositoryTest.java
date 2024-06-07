@@ -98,7 +98,6 @@ class UsuarioRepositoryTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -122,7 +121,6 @@ class UsuarioRepositoryTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -145,7 +143,6 @@ class UsuarioRepositoryTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Usuario usuario4 = new Usuario();
@@ -164,7 +161,6 @@ class UsuarioRepositoryTest {
         usuario4.setObjetivo(new Objetivo());
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         Objetivo objetivo3 = new Objetivo();
@@ -188,7 +184,6 @@ class UsuarioRepositoryTest {
         usuario5.setObjetivo(objetivo3);
         usuario5.setPeso(0.5d);
         usuario5.setPontuacao(-1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -211,7 +206,6 @@ class UsuarioRepositoryTest {
         usuario6.setObjetivo(objetivo4);
         usuario6.setPeso(0.5d);
         usuario6.setPontuacao(-1);
-        usuario6.setReceitas(new ArrayList<>());
         usuario6.setSenha("42");
         usuarioRepository.save(usuario3);
         usuarioRepository.save(usuario6);
@@ -252,7 +246,6 @@ class UsuarioRepositoryTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -276,7 +269,6 @@ class UsuarioRepositoryTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -299,7 +291,6 @@ class UsuarioRepositoryTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Usuario usuario4 = new Usuario();
@@ -318,7 +309,6 @@ class UsuarioRepositoryTest {
         usuario4.setObjetivo(new Objetivo());
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         Objetivo objetivo3 = new Objetivo();
@@ -342,7 +332,6 @@ class UsuarioRepositoryTest {
         usuario5.setObjetivo(objetivo3);
         usuario5.setPeso(0.5d);
         usuario5.setPontuacao(-1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -365,7 +354,6 @@ class UsuarioRepositoryTest {
         usuario6.setObjetivo(objetivo4);
         usuario6.setPeso(0.5d);
         usuario6.setPontuacao(-1);
-        usuario6.setReceitas(new ArrayList<>());
         usuario6.setSenha("42");
         usuarioRepository.save(usuario3);
         usuarioRepository.save(usuario6);
@@ -407,7 +395,6 @@ class UsuarioRepositoryTest {
         usuario.setObjetivo(new Objetivo());
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo = new Objetivo();
@@ -431,7 +418,6 @@ class UsuarioRepositoryTest {
         usuario2.setObjetivo(objetivo);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -454,7 +440,6 @@ class UsuarioRepositoryTest {
         usuario3.setObjetivo(objetivo2);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
 
         Usuario usuario4 = new Usuario();
@@ -473,7 +458,6 @@ class UsuarioRepositoryTest {
         usuario4.setObjetivo(new Objetivo());
         usuario4.setPeso(0.5d);
         usuario4.setPontuacao(-1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("42");
 
         Objetivo objetivo3 = new Objetivo();
@@ -497,7 +481,6 @@ class UsuarioRepositoryTest {
         usuario5.setObjetivo(objetivo3);
         usuario5.setPeso(0.5d);
         usuario5.setPontuacao(-1);
-        usuario5.setReceitas(new ArrayList<>());
         usuario5.setSenha("42");
 
         Objetivo objetivo4 = new Objetivo();
@@ -520,7 +503,6 @@ class UsuarioRepositoryTest {
         usuario6.setObjetivo(objetivo4);
         usuario6.setPeso(0.5d);
         usuario6.setPontuacao(-1);
-        usuario6.setReceitas(new ArrayList<>());
         usuario6.setSenha("42");
         usuarioRepository.save(usuario3);
         usuarioRepository.save(usuario6);

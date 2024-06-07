@@ -50,7 +50,6 @@ class ObjetivoTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
         Objetivo objetivo2 = new Objetivo();
         objetivo2.setId(1L);
@@ -72,7 +71,6 @@ class ObjetivoTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         actualObjetivo.setUsuario(usuario2);
         Long actualId = actualObjetivo.getId();
@@ -122,7 +120,6 @@ class ObjetivoTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
 
         Objetivo objetivo2 = new Objetivo();
@@ -146,7 +143,6 @@ class ObjetivoTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
 
         // Act
@@ -173,7 +169,6 @@ class ObjetivoTest {
         usuario3.setObjetivo(objetivo3);
         usuario3.setPeso(10.0d);
         usuario3.setPontuacao(1);
-        usuario3.setReceitas(new ArrayList<>());
         usuario3.setSenha("Senha");
         Objetivo objetivo4 = new Objetivo();
         objetivo4.setId(1L);
@@ -195,7 +190,6 @@ class ObjetivoTest {
         usuario4.setObjetivo(objetivo4);
         usuario4.setPeso(10.0d);
         usuario4.setPontuacao(1);
-        usuario4.setReceitas(new ArrayList<>());
         usuario4.setSenha("Senha");
         actualObjetivo.setUsuario(usuario4);
         Long actualId = actualObjetivo.getId();

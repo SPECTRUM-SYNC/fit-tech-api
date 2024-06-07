@@ -80,7 +80,6 @@ class ReceitaTest {
         usuario.setObjetivo(objetivo);
         usuario.setPeso(10.0d);
         usuario.setPontuacao(1);
-        usuario.setReceitas(new ArrayList<>());
         usuario.setSenha("Senha");
         Objetivo objetivo2 = new Objetivo();
         objetivo2.setId(1L);
@@ -102,7 +101,6 @@ class ReceitaTest {
         usuario2.setObjetivo(objetivo2);
         usuario2.setPeso(10.0d);
         usuario2.setPontuacao(1);
-        usuario2.setReceitas(new ArrayList<>());
         usuario2.setSenha("Senha");
         receita.setUsuario(usuario2);
         String actualAcucar = receita.getAcucar();
