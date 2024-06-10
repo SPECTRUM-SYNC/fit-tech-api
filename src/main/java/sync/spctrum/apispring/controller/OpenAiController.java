@@ -69,4 +69,27 @@ public class OpenAiController {
 
         return receitas;
     }
+
+
+    @GetMapping("/receita-extra/{id}")
+    public ReceitaResponseDTO receitaExtra(@RequestParam String acompanhamento, @RequestParam String principal, @PathVariable Long id) {
+        String prompt = "Gere um JSON com os seguintes campos Nome, Ingredientes, Modo de preparo, Calorias, Tempo de preparo, Tipo, Proteina, Calorias, Carboidratos, Gorduras, Acucar. " +
+                "O JSON deve ser com o [] e ' , ' para separar, o campo Ingredientes seja representado como um array com os ingredientes listados individualmente. " +
+                "Deve ser uma receita leve tendo como alimento principal " + principal + " e o acompanhamento é " + acompanhamento + "  . Gere somente o texto e sem nenhum texto explicativo, gere 1 receita";
+
+        String resposta;
+        try {
+            resposta = openai.call(prompt);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao chamar a API OpenAI", e);
+        }
+
+        ReceitaResponseDTO receita;
+        try {
+            receita = ReceitaMapper.toRespostaDTO(receitaService.desserializarReceitaExtra(resposta, id));
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao desserializar a resposta da API OpenAI", e);
+        }
+        return receita;
+    }
 }

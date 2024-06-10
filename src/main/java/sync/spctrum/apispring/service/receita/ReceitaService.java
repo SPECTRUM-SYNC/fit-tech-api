@@ -1,6 +1,9 @@
 package sync.spctrum.apispring.service.receita;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,6 +51,25 @@ public class ReceitaService {
         }
         return receitas;
     }
+    public Receita desserializarReceitaExtra(String json, Long id) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound("ID : " + id));
+        UsuarioResponseDTO response = UsuarioMapper.toRespostaDTO(usuario);
+
+        JsonArray jsonArray = JsonParser.parseString(json).getAsJsonArray();
+        if (jsonArray.isEmpty()) {
+            throw new ResourceNotFound("Nenhum objeto encontrado no JSON fornecido");
+        }
+
+        JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+        Receita receita = gson.fromJson(jsonObject, Receita.class);
+
+        receita.setDataCriacao(LocalDate.now());
+        receita.setUsuario(UsuarioMapper.toEntity(response));
+        receita.setQtdSelecionada(1);
+
+        return receitaRepository.save(receita);
+    }
+
 
     public List<Receita> findByReceitasWhereUsuarioId(Long id) {
         return receitaRepository.findAllByUsuario_IdAndDataCriacao(id, LocalDate.now());
