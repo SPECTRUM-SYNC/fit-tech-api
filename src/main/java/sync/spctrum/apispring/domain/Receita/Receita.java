@@ -23,6 +23,7 @@ public class Receita {
     private String[] ingredientes;
 
     @SerializedName("Modo de preparo")
+    @Column(columnDefinition = "TEXT", length = 500)
     private String modoPreparo;
 
     @SerializedName("Calorias")
@@ -47,8 +48,8 @@ public class Receita {
     private String acucar;
 
     private LocalDate dataCriacao;
-
     private Integer qtdSelecionada;
+    private String image;
 
     @ManyToOne
     private Usuario usuario;

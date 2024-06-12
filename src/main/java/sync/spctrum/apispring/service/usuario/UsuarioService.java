@@ -39,6 +39,7 @@ import java.util.List;
 public class UsuarioService {
 
     private final EmailService emailService;
+
     @Value("${spring.cloud.azure.storage.blob.container-name}")
     private String containerName;
 
