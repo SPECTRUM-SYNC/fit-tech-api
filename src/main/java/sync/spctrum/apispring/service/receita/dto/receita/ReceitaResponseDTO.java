@@ -18,4 +18,5 @@ public class ReceitaResponseDTO {
     private String gorduras;
     private String acucar;
     private Integer qtdSelecionada;
+    private String image;
 }
