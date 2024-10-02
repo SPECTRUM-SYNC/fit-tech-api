@@ -6,7 +6,6 @@ import sync.spctrum.apispring.domain.Treino.Treino;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoCreateDTO;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoResponseDTO;
 
-
 import java.util.List;
 
 @Configuration

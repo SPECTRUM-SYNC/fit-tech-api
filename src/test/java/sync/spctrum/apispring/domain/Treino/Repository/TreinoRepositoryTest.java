@@ -1,15 +1,9 @@
 package sync.spctrum.apispring.domain.Treino.Repository;
 
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,6 +11,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Treino.Treino;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
+
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 @ContextConfiguration(classes = {TreinoRepository.class})
 @ExtendWith(SpringExtension.class)

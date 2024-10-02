@@ -8,7 +8,6 @@ import lombok.Setter;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter

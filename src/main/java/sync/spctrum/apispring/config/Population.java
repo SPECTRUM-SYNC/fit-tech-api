@@ -2,7 +2,6 @@ package sync.spctrum.apispring.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import sync.spctrum.apispring.domain.HistoricoPeso.HistoricoPeso;
 import sync.spctrum.apispring.domain.HistoricoPeso.Repository.HistoricoPesoRepository;

@@ -1,7 +1,10 @@
 package sync.spctrum.apispring.domain.Objetivo;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.io.Serializable;

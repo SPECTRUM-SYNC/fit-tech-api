@@ -5,15 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
-import sync.spctrum.apispring.domain.Receita.Receita;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List; // Import corrigido para java.util.List
 
 @Getter
 @Setter

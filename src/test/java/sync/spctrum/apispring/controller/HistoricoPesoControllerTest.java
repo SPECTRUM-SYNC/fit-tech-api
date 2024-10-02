@@ -1,22 +1,6 @@
 package sync.spctrum.apispring.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,9 +38,22 @@ import sync.spctrum.apispring.service.usuario.UsuarioService;
 import sync.spctrum.apispring.service.usuario.autenticacao.AutenticacaoService;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.*;
+
 @ContextConfiguration(classes = {HistoricoPesoController.class})
 @ExtendWith(SpringExtension.class)
 @DisabledInAotMode
+
 class HistoricoPesoControllerTest {
     @Autowired
     private HistoricoPesoController historicoPesoController;

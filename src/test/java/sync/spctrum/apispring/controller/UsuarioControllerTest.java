@@ -1,18 +1,6 @@
 package sync.spctrum.apispring.controller;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.DataInputStream;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Optional;
-
 import org.apache.catalina.User;
 import org.apache.catalina.realm.UserDatabaseRealm;
 import org.apache.catalina.users.MemoryUserDatabase;
@@ -51,6 +39,15 @@ import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdatePerfilDTO;
+
+import java.io.DataInputStream;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {UsuarioController.class})
 @ExtendWith(SpringExtension.class)

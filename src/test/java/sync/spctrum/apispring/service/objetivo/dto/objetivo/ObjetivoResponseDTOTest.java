@@ -1,8 +1,8 @@
 package sync.spctrum.apispring.service.objetivo.dto.objetivo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ObjetivoResponseDTOTest {
     /**

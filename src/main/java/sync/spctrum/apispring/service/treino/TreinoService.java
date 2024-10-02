@@ -9,7 +9,6 @@ import sync.spctrum.apispring.service.usuario.UsuarioService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 @Service

@@ -1,16 +1,13 @@
 package sync.spctrum.apispring.observer.email;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.domain.Usuario.repository.UsuarioRepository;
 import sync.spctrum.apispring.observer.Observer;
-import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.service.email.EmailService;
-import sync.spctrum.apispring.service.usuario.UsuarioService;
 @EnableScheduling
 public class EmailObserver implements Observer {
 
@@ -37,7 +34,7 @@ public class EmailObserver implements Observer {
         usuario.setSenha(senhaCriptografada);
         usuarioRepository.save(usuario);
 
-        emailService.enviarEmailRedefinicaoSenha(email, senhaCriptografada);
+        emailService.enviarEmailRedefinicaoSenha(email, novaSenha);
 
     }
 }

@@ -1,15 +1,14 @@
 package sync.spctrum.apispring.domain.Objetivo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.Test;
+import sync.spctrum.apispring.domain.Usuario.Usuario;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.Date;
 
-import org.junit.jupiter.api.Test;
-import sync.spctrum.apispring.domain.Usuario.Usuario;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class ObjetivoTest {
     /**

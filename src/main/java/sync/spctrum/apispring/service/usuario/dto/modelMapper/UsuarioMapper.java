@@ -6,7 +6,6 @@ import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.service.usuario.autenticacao.dto.UsuarioTokenDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioCreateDTO;
 import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioResponseDTO;
-import sync.spctrum.apispring.service.usuario.dto.usuario.UsuarioUpdateDTO;
 
 import java.util.List;
 

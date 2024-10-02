@@ -1,14 +1,6 @@
 package sync.spctrum.apispring.controller;
 
-import static org.mockito.Mockito.when;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -28,6 +20,13 @@ import sync.spctrum.apispring.domain.Treino.Treino;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
 import sync.spctrum.apispring.service.treino.TreinoService;
 import sync.spctrum.apispring.service.treino.dto.treino.TreinoCreateDTO;
+
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {TreinoController.class})
 @ExtendWith(SpringExtension.class)

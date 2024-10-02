@@ -1,8 +1,8 @@
 package sync.spctrum.apispring.service.treino.dto.treino;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TreinoCountDTOTest {
     /**

@@ -1,8 +1,9 @@
 package sync.spctrum.apispring.service;
 
+import sync.spctrum.apispring.observer.Observer;
+
 import java.util.ArrayList;
 import java.util.List;
-import sync.spctrum.apispring.observer.Observer;
 
 public class UsuarioRedefinicaoSenha {
 

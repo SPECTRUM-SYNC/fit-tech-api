@@ -1,16 +1,15 @@
 package sync.spctrum.apispring.domain.Receita;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.junit.jupiter.api.Test;
 import sync.spctrum.apispring.domain.Objetivo.Objetivo;
 import sync.spctrum.apispring.domain.Usuario.Usuario;
+
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class ReceitaTest {
     /**

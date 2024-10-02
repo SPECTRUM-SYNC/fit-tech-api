@@ -1,12 +1,12 @@
 package sync.spctrum.apispring.service.usuario.dto.usuario;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.Mockito.mock;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 class UsuarioUpdateDTOTest {
     /**
