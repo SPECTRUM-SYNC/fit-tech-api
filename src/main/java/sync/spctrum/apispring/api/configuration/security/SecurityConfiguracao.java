@@ -57,6 +57,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/openai"),
             new AntPathRequestMatcher("/usuarios/download"),
             new AntPathRequestMatcher("/usuarios/enviar-email"),
+            new AntPathRequestMatcher("/usuarios/perfil/{id}"),
             new AntPathRequestMatcher("/openai/gpt3"),
             new AntPathRequestMatcher("/usuarios/login"),
             new AntPathRequestMatcher("/h2-console/**"),
